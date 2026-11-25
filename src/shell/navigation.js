@@ -1,21 +1,22 @@
 // Top-navigation items shared by every screen: [id, label, href]
 export const NAV_ITEMS = [
-  ['home', 'Home', '#/'],
-  ['explore', 'Explore', '#/explore'],
+  ['home', 'Reading Room', '#/'],
+  ['explore', 'Library', '#/explore'],
   ['forum', 'Community', '#/community'],
   ['feed', 'Feed', '#/feed'],
   ['leaders', 'Leaderboard', '#/leaderboard'],
   ['studio', 'AI Studio', '#/studio'],
 ];
 
-export function navigation(active) {
+export function navigation(active, page = '01') {
   return {
-    links: NAV_ITEMS.map(([id, label, href]) => ({
+    page,
+    links: NAV_ITEMS.map(([id, label, href], i) => ({
       id,
       label,
       href,
+      n: String(i + 1).padStart(2, '0'),
       current: id === active ? 'page' : 'false',
-      style: id === active ? 'color:#0A0A10;background:#F2F0EA' : 'color:#B9B7C6;background:transparent',
     })),
   };
 }

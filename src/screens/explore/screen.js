@@ -1,47 +1,176 @@
 import { ViewModel } from '../../runtime.js';
+import { BOOKS, BOOK, AUTHORS, GENRES, MOODS, genreOf, fmt } from '../../data/books.js';
+import { domBook } from '../../lib/covers.js';
+import { reducedMotion } from '../../lib/ui.js';
+import { go } from '../../router.js';
 
-// 3D Library screen: state, data and every interaction on this page.
+const root = () => document.documentElement;
+const WHY = {
+  'Mind-bending': 'you highlight sentences about memory and maps more than anything else.',
+  Warm: 'it fits the 20 minutes you usually read before bed.',
+  'A good cry': 'you re-read sad endings twice — this one earns it.',
+  'One more chapter': 'short chapters; readers like you finish it in two nights.',
+};
+
+// The Stacks: genre/mood/search filters drive the 3D helix; clicking pulls a book out.
 export default class LibraryScreen extends ViewModel {
+  constructor() {
+    super();
+    this.state = { genre: 'All', mood: null, q: '', cur: null, saved: {} };
+    this.cleanups = [];
+  }
+
+  destroy() {
+    this.dead = true;
+    this.cleanups.forEach((f) => f());
+    ['--tx', '--ty', '--to'].forEach((v) => root().style.removeProperty(v));
+  }
+
+  list() {
+    const { genre, mood, q } = this.state;
+    const ql = q.trim().toLowerCase();
+    return BOOKS.filter((b) => (genre === 'All' || genreOf(b) === genre)
+      && (!mood || b.moods.includes(mood))
+      && (!ql || b.title.toLowerCase().includes(ql) || b.author.toLowerCase().includes(ql) || b.genre.toLowerCase().includes(ql)));
+  }
+
+  update(patch) {
+    this.setState(patch);
+    const ids = this.list().map((b) => b.id);
+    if (this.state.cur && !ids.includes(this.state.cur)) this.setState({ cur: null });
+    if (this.helix) {
+      this.helix.filter(ids);
+      if (!this.state.cur) {
+        this.helix.pinned = -1;
+        const mid = Math.floor((ids.length - 1) / 2);
+        let t = -(mid / 9) * Math.PI * 2;
+        t += Math.round((this.helix.target - t) / (Math.PI * 2)) * Math.PI * 2;
+        this.helix.target = t; this.helix.velocity = 0;
+      }
+    }
+  }
+
+  pick(id) {
+    this.setState({ cur: id });
+    this.helix?.focus(id);
+  }
+
   bindings() {
     const s = this.state;
-    const B = {
-      carto:{title:'The Cartographer of Silence',short:'OKAFOR',author:'Mira Okafor',genre:'LITERARY SCI-FI',cat:'Speculative',bg:'#123B3A',accent:'#F5B94A',ink:'#F4EBD7',spine:'#0B2726',shape:'width:80%;height:54%;border-radius:50%;top:-10%;right:-24%',rating:'4.8',reading:'18.2k',blurb:'A mapmaker charts a city where sound is rationed, and finds the one street that was never meant to be quiet.',why:'you slowed down on every passage about memory in your last three books.'},
-      salt:{title:'Salt & Static',short:'RAMAN',author:'Dev Raman',genre:'THRILLER',cat:'Thriller',bg:'#E9E1D3',accent:'#D9472B',ink:'#1A1714',spine:'#B9AE9A',shape:'width:100%;height:6%;left:0;top:58%',rating:'4.6',reading:'24.9k',blurb:'A lighthouse radio starts reading out the names of people who will vanish next. The keeper hears her own.',why:'you finish short-chapter thrillers in two nights.'},
-      orchard:{title:'Orchard of Small Gods',short:'VARGA',author:'Lena Varga',genre:'FANTASY',cat:'Speculative',bg:'#2A1A3F',accent:'#C9A7FF',ink:'#F1E9FF',spine:'#1B102A',shape:'width:84%;height:60%;border-radius:999px 999px 0 0;left:8%;bottom:0',rating:'4.7',reading:'11.3k',blurb:'Every tree in the orchard shelters a god no larger than a thumb. One of them has stopped answering prayers.',why:'mythic worlds with slow reveals, like your last three five-star reads.'},
-      km:{title:'Kilometre Zero',short:'MEHTA',author:'Arjun Mehta',genre:'MEMOIR',cat:'Life',bg:'#C5532E',accent:'#F7D9A8',ink:'#FFF4E4',spine:'#8F3A1F',shape:'width:44%;height:30%;border-radius:50%;left:28%;top:34%',rating:'4.5',reading:'8.7k',blurb:'Nine thousand kilometres by bus from Kanyakumari to Istanbul, and the strangers who kept him going.',why:'it is the most-picked book in your #12BooksAway challenge.'},
-      weight:{title:'The Weight of Light',short:'ISHIDA',author:'Hana Ishida',genre:'LITERARY',cat:'Literary',bg:'#0F1A33',accent:'#8FB8FF',ink:'#E8EEFF',spine:'#08101F',shape:'width:2px;height:70%;left:62%;top:15%',rating:'4.9',reading:'31.0k',blurb:'Two sisters inherit a darkroom in Kyoto, and the photographs their mother never developed.',why:'Kabir, whose taste matches yours 91%, gave it five stars.'},
-      glass:{title:'Glasshouse Protocol',short:'BRANDT',author:'Theo Brandt',genre:'TECHNO-THRILLER',cat:'Thriller',bg:'#1E2A22',accent:'#B7F36B',ink:'#EAF7DA',spine:'#121A15',shape:'width:60%;height:40%;border:2px solid #B7F36B;background:transparent;left:20%;top:26%;transform:rotate(45deg)',rating:'4.4',reading:'9.9k',blurb:'A heist inside a city governed by its own weather model. To get out, the crew has to make it rain.',why:'it has the pace of Salt & Static, which you finished in two nights.'},
-      moons:{title:'Paper Moons Over Pune',short:'KULKARNI',author:'Sana Kulkarni',genre:'MAGICAL REALISM',cat:'Literary',bg:'#F2C14E',accent:'#23324D',ink:'#23324D',spine:'#C99A2E',shape:'width:46%;height:31%;border-radius:50%;right:10%;top:12%',rating:'4.7',reading:'6.4k',blurb:'A grandmother keeps the moon in a steel tiffin box. Her granddaughter opens it during the monsoon.',why:'it is set in Pune, and you saved three monsoon stories this week.'},
-      field:{title:'Fieldnotes for the End of Summer',short:'CALLOWAY',author:'Iris Calloway',genre:'POETRY',cat:'Life',bg:'#D8C7E8',accent:'#5B3E7A',ink:'#2B1D3A',spine:'#A894BE',shape:'width:120%;height:120%;border-radius:50%;left:-60%;bottom:-70%',rating:'4.6',reading:'5.1k',blurb:'Forty-four short poems written in the last week of August, one for each hour the light allowed.',why:'short enough for the 20 minutes you read before bed.'}
-    };
-    const keys = Object.keys(B);
-    const CATS = ['All shelves','Literary','Speculative','Thriller','Life'];
-    const cat = s.cat || 'All shelves';
-    const list = keys.filter((k) => cat === 'All shelves' || B[k].cat === cat);
-    const sel = list.indexOf(s.sel) > -1 ? s.sel : list[0];
-    const W = { carto:48, salt:40, orchard:56, km:38, weight:44, glass:50, moons:36, field:30 };
-    const H = { carto:280, salt:256, orchard:290, km:248, weight:270, glass:262, moons:244, field:236 };
-    const vt = (fn) => { if (document.startViewTransition && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) { document.startViewTransition(() => new Promise((r) => { fn(); setTimeout(r, 40); })); } else fn(); };
-    const spine = (k) => ({ ...B[k], w: W[k], h: H[k], on: k === sel ? 'true' : 'false', vt: k === sel ? 'none' : 'bk-' + k, sel: k === sel ? 'opacity:.18;filter:grayscale(1)' : '', pick: () => vt(() => this.setState({ sel: k, flip: !(this.state).flip })) });
-    const half = Math.ceil(list.length / 2);
-    const rows = list.length > 4 ? [list.slice(0, half), list.slice(half)] : [list];
-    const sv = s.saved || {};
+    const shown = this.list();
+    const c = s.cur ? BOOK[s.cur] : null;
+    const step = (dir) => () => { if (this.helix) { this.helix.pinned = -1; this.helix.target += dir * (Math.PI * 2) / 9; this.helix.velocity = 0; } };
+    const scrollRail = (dir) => () => document.querySelector('[data-rail]')?.scrollBy({ left: dir * 528, behavior: reducedMotion() ? 'auto' : 'smooth' });
+    const top = [...BOOKS].filter((b) => !b.upcoming).sort((a, b) => b.reading - a.reading).slice(0, 8);
+    const max = top[0].reading;
     return {
-      cats: CATS.map((c) => ({ label: c, on: c === cat ? 'true' : 'false', pick: () => vt(() => this.setState({ cat: c })), style: c === cat ? 'background:#F2F0EA;color:#0A0A10;border:1px solid #F2F0EA' : 'background:rgba(255,255,255,.04);color:#D6D4E0;border:1px solid rgba(255,255,255,.14)' })),
-      shelves: rows.map((r, i) => ({ label: rows.length > 1 ? (i === 0 ? 'UPPER SHELF' : 'LOWER SHELF') : cat.toUpperCase(), books: r.map(spine) })),
-      cur: { ...B[sel], caps: B[sel].author.toUpperCase() }, curVt: 'bk-' + sel,
-      inName: s.flip ? 'in' : 'rv',
-      tilt: (e) => { const t = e.currentTarget, r = t.getBoundingClientRect(); t.style.setProperty('--rx', (4 + (0.5 - (e.clientY - r.top) / r.height) * 6).toFixed(2) + 'deg'); t.style.setProperty('--ry', (((e.clientX - r.left) / r.width - 0.5) * 10).toFixed(2) + 'deg'); },
-      untilt: (e) => { e.currentTarget.style.setProperty('--rx', '4deg'); e.currentTarget.style.setProperty('--ry', '0deg'); },
-      magnet: (e) => { const t = e.currentTarget, r = t.getBoundingClientRect(); t.style.setProperty('--mx', ((e.clientX - r.left - r.width / 2) * 0.28).toFixed(1) + 'px'); t.style.setProperty('--my', ((e.clientY - r.top - r.height / 2) * 0.35).toFixed(1) + 'px'); },
-      unmagnet: (e) => { e.currentTarget.style.setProperty('--mx', '0px'); e.currentTarget.style.setProperty('--my', '0px'); },
-      savedOn: sv[sel] ? 'true' : 'false', saveLabel: sv[sel] ? 'On your shelf ✓' : 'Add to my shelf',
-      toggleSave: () => this.setState({ saved: { ...sv, [sel]: !sv[sel] } }),
+      shown: shown.map(domBook),
+      countLabel: `${shown.length} OF ${BOOKS.length} BOOKS`,
+      empty: shown.length === 0 ? 'y' : '',
+      clear: () => this.update({ genre: 'All', mood: null, q: '' }),
+      q: s.q,
+      onQ: (e) => this.update({ q: e.target.value }),
+      genres: GENRES.map((g) => ({ label: g, n: g === 'All' ? BOOKS.length : BOOKS.filter((b) => genreOf(b) === g).length, on: g === s.genre ? 'true' : 'false', pick: () => this.update({ genre: g }) })),
+      moods: MOODS.map((m) => ({ label: m, on: m === s.mood ? 'true' : 'false', pick: () => this.update({ mood: s.mood === m ? null : m }) })),
+      prev: step(-1), next: step(1),
+      pulledOpen: c ? 'true' : 'false',
+      cur: c && {
+        ...domBook(c), initials: AUTHORS[c.authorId]?.initials, ac: AUTHORS[c.authorId]?.color,
+        ratingLabel: c.upcoming ? '—' : `★ ${c.rating}`, readingLabel: c.upcoming ? `${c.threads} waiting` : fmt(c.reading), pagesLabel: c.upcoming ? '2027' : c.pages,
+        why: c.upcoming ? 'you finished Cartographer in 4 days. The field logs becoming this book are open to read now.' : WHY[c.moods[0]],
+        cta: c.upcoming ? 'Read the field logs' : 'Open the book',
+      },
+      unpick: () => { this.setState({ cur: null }); if (this.helix) this.helix.pinned = -1; },
+      savedOn: c && s.saved[c.id] ? 'true' : 'false',
+      saveLabel: c && s.saved[c.id] ? 'On your shelf ✓' : (c?.upcoming ? 'Pre-order' : 'Add to shelf'),
+      toggleSave: () => c && this.setState({ saved: { ...s.saved, [c.id]: !s.saved[c.id] } }),
+
+      railPrev: scrollRail(-1), railNext: scrollRail(1),
+      rail: [
+        [BOOK.cartel, 'PRE-ORDER · SPRING 2027', '#F5B94A', '210 field logs written · 4,120 pre-orders', 62],
+        [BOOK.wander, 'OUT THIS WEEK', '#6FD6C4', 'Launch Q&A Saturday · 1,900 reading', 100],
+        [BOOK.glow, 'NEW · POETRY', '#6FD6C4', 'Chosen by readers from 365 daily poems', 100],
+        [BOOK.weight, 'SERIAL · CH. 22 OF 26', '#9D8CFF', 'Next chapter Friday 7 a.m.', 84],
+        [BOOK.salt, 'SERIAL · CH. 4 OF 18', '#9D8CFF', 'From #SaltDiaries · 24,900 readers', 22],
+        [BOOK.moons, 'AUDIO EDITION · DEC', '#F5B94A', 'Narrated by the author in Marathi & English', 70],
+        [BOOK.cipher, 'BOOK CLUB PICK · JAN', '#FF7A59', '38 clubs signed up · cipher contest open', 45],
+      ].map(([b, kicker, kc, meta, pct]) => ({ ...domBook(b), kicker, kc, meta, pct })),
+
       collections: [
-        { kicker:"EDITOR'S PICKS · NOVEMBER", color:'#F5B94A', title:'Books that rearrange time', desc:'Looping, reversed and braided stories, chosen by the Folio editors.', a:B.glass, b:B.weight, c:B.carto },
-        { kicker:'NEW THIS MONTH', color:'#6FD6C4', title:'Out in November', desc:'Launch-week Q&As already scheduled in the community.', a:B.km, b:B.field, c:B.salt },
-        { kicker:'COMPANION · BUILT FOR YOU', color:'#C9BFFF', title:'Salt-air mysteries', desc:'Four books set beside the sea; two by authors you follow.', a:B.salt, b:B.km, c:B.moons }
-      ]
+        { kicker: "EDITORS' PICKS · NOVEMBER", color: '#F5B94A', title: 'Books that rearrange time', desc: 'Looping, reversed and braided stories, chosen by the Folio editors.', ids: ['glass', 'weight', 'carto'], readers: '61k', href: '#/book?b=glass' },
+        { kicker: 'BORN IN PUBLIC', color: '#6FD6C4', title: 'Started as daily stories', desc: 'Every one of these began as a 40-word post that readers would not let go.', ids: ['moons', 'salt', 'km'], readers: '40k', href: '#/book?b=moons' },
+        { kicker: 'COMPANION · BUILT FOR YOU', color: '#C9BFFF', title: 'Rain, lamps and long nights', desc: 'Four quiet books for the monsoon; two by authors you follow.', ids: ['monsoon', 'lanterns', 'nine'], readers: '25k', href: '#/book?b=lanterns' },
+      ].map((col, i) => ({ ...col, d: (i * 0.08) + 's', count: 12 + i * 5, books: col.ids.map((id, k) => ({ ...domBook(BOOK[id]), k: k - 1 })) })),
+
+      chart: top.map((b, i) => ({ ...domBook(b), n: String(i + 1).padStart(2, '0'), pct: Math.round((b.reading / max) * 100), readingLabel: fmt(b.reading), delta: ['+12%', '+31%', '+8%', '+4%', '+19%', 'NEW', '+2%', '+44%'][i], d: (i * 0.04) + 's' })),
     };
+  }
+
+  async mounted(host) {
+    const holder = host.querySelector('[data-lib-stage]');
+    const { Stage, Helix } = await import('../../lib/stage.js');
+    if (this.dead) return;
+    if (!Stage.supported()) { host.querySelector('.lib')?.classList.add('no-gl'); return; }
+    await Promise.all(["400 64px 'Instrument Serif'", "500 14px 'JetBrains Mono'", '600 16px Inter'].map((f) => document.fonts.load(f).catch(() => null)));
+    if (this.dead) return;
+    const stage = new Stage(holder, { z: 15, fog: [12, 26] });
+    this.cleanups.push(() => stage.destroy());
+    const helix = this.helix = new Helix(stage, BOOKS, { scale: 0.36, radius: 4.5, rise: 0.26 });
+    helix.filter(BOOKS.map((b) => b.id));
+    helix.filter([]); helix.place(true);
+    setTimeout(() => !this.dead && helix.filter(this.list().map((b) => b.id)), 250);
+    const tip = host.querySelector('[data-ltip]');
+
+    let drag = null, moved = 0;
+    const ndc = (e) => { const r = holder.getBoundingClientRect(); return [((e.clientX - r.left) / r.width) * 2 - 1, -((e.clientY - r.top) / r.height) * 2 + 1]; };
+    const move = (e) => {
+      const [x, y] = ndc(e);
+      helix.setPointer(x, y);
+      root().style.setProperty('--tx', e.clientX + 'px');
+      root().style.setProperty('--ty', e.clientY + 'px');
+      if (drag) { const dx = e.clientX - drag.x; drag.x = e.clientX; moved += Math.abs(dx); helix.velocity = dx * 0.0045; helix.pinned = -1; }
+    };
+    const down = (e) => { drag = { x: e.clientX }; moved = 0; };
+    const up = () => { if (drag && moved < 6 && helix.hover >= 0) this.pick(helix.items[helix.hover].userData.book.id); drag = null; };
+    const leave = () => { helix.setPointer(-9, -9); drag = null; };
+    holder.addEventListener('pointermove', move);
+    holder.addEventListener('pointerdown', down);
+    window.addEventListener('pointerup', up);
+    holder.addEventListener('pointerleave', leave);
+    const key = (e) => {
+      if (e.target.closest?.('input,textarea')) return;
+      if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') { helix.pinned = -1; helix.target += (e.key === 'ArrowRight' ? 1 : -1) * Math.PI * 2 / 9; }
+      if (e.key === 'Escape' && this.state.cur) { this.setState({ cur: null }); helix.pinned = -1; }
+    };
+    window.addEventListener('keydown', key);
+    this.cleanups.push(() => { holder.removeEventListener('pointermove', move); holder.removeEventListener('pointerdown', down); window.removeEventListener('pointerup', up); holder.removeEventListener('pointerleave', leave); window.removeEventListener('keydown', key); });
+
+    helix.on('hover', (b) => {
+      holder.style.cursor = b ? 'pointer' : '';
+      if (b) {
+        tip.querySelector('.tip-g').textContent = b.genre;
+        tip.querySelector('b').textContent = b.title;
+        tip.querySelector('.tip-a').textContent = b.author;
+        tip.querySelector('.tip-m').textContent = b.upcoming ? 'COMING 2027 · PRE-ORDER' : `★ ${b.rating} · ${fmt(b.reading)} READING`;
+      }
+      root().style.setProperty('--to', b ? '1' : '0');
+    });
+
+    stage.frames.add((dt, t) => {
+      const wide = stage.camera.aspect >= 1;
+      const open = !!this.state.cur;
+      const gx = open && wide ? -2.6 : 0;
+      helix.group.position.x += (gx - helix.group.position.x) * (1 - Math.pow(0.002, dt));
+      const fy = this.state.cur ? -helix.slotY(this.state.cur) : 0;
+      helix.group.position.y += ((wide ? -1.1 : -0.2) + fy - helix.group.position.y) * 0.1;
+      helix.group.rotation.x = 0.1;
+      if (!drag && helix.hover < 0 && helix.pinned < 0 && !reducedMotion()) helix.target += dt * 0.08;
+      stage.camera.position.set(stage.pointer.sx * 0.5, 0.6 + stage.pointer.sy * 0.3, wide ? 15 : 23);
+      stage.lookAt.set(0, wide ? -0.6 : -0.6, 0);
+      void t;
+    });
+
+    const pre = new URLSearchParams(location.hash.split('?')[1] || '').get('b');
+    if (pre && BOOK[pre]) setTimeout(() => !this.dead && this.pick(pre), 600);
   }
 }

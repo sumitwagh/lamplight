@@ -1,8 +1,10 @@
 # Folio · The Reading Room
 
-The immersive 3D direction for Folio: a home page where a book opens as you scroll, a 3D library
-you browse by turning shelves, book and author pages, community, feed, leaderboard, an AI studio
-and an author dashboard, all connected and dark, cinematic and tactile.
+The immersive 3D direction for Folio, in the **Lamplight** design language: a dark reading room
+lit by a lamp that follows your cursor. One real-time WebGL book opens as you scroll, its pages
+riffle, readers' highlights float out of the margins and it flies back into a 3D helix library.
+Around it: an "Ask the book" companion, a live globe of readers, a story-to-chapter journey,
+reading challenges, a page-turning reader with ambient sound, and the community screens.
 
 This is one of three independent Folio projects, each in its own repository with its own
 dependencies, configuration and deployment. Nothing is shared, so you can change it freely.
@@ -27,6 +29,14 @@ src/
   router.js                hash router (#/, #/discover, #/book …) with view transitions
   routes.js                the list of screens; add new screens here
   runtime.js               tiny rendering engine (template + bindings, DOM patching)
+  data/
+    books.js               sample catalogue (24 books, 8 authors), highlights, readers by city
+    chapters.js            reader pages, margin notes, spoiler-dial summaries
+  lib/
+    stage.js               three.js layer: Stage (lamp, camera), Book3D (opening, page curl), Helix, Dust
+    covers.js              one cover design painted for CSS books and WebGL textures
+    ui.js                  smooth scroll (Lenis), lamp cursor, preloader, reveals, ⌘K Ask Folio palette
+    ambience.js            generated rain / fire / library sound (Web Audio, no files)
   shell/
     nav.html               top navigation (becomes a bottom tab bar on phones)
     navigation.js          navigation items and badges
@@ -49,14 +59,26 @@ CSS is swapped in only while it is showing, so class names cannot clash.
 - `this.setState({ ... })` updates state and re-renders; the DOM is patched in place.
 - Links between screens are ordinary anchors: `<a href="#/community">`.
 - `<!--nav-->` in a template marks where the shared top navigation is inserted.
+- Classes named `is-*` and attributes named `data-js-*` belong to scripts and survive re-renders;
+  an element with `data-js-frozen` keeps its children (used for WebGL hosts and live counters).
+- A screen can define `mounted(host)` (runs after first paint) and `destroy()` (on leave).
+- `data-reveal` fades an element in on scroll; `data-split` reveals a heading word by word.
+
+## Changing the 3D
+
+- Swap the hero book: `BOOK.carto` in `src/screens/home/screen.js` (any id from `data/books.js`).
+- Add a book: one entry in `BOOKS`; its cover is painted from `bg`, `accent`, `ink`, `spine` and
+  `motif` (`sun`, `band`, `arch`, `disc`, `line`, `diamond`, `moon`, `tide`, `grid`, `rings`).
+- The home scroll choreography lives in `startStage()`; each chapter is a progress range (0–1).
+- Without WebGL, or with reduced motion, every screen falls back to CSS books and static motion.
 
 ## Screens
 
 | Route | Screen |
 | --- | --- |
-| `#/` | The Reading Room: scroll to open the book of the month; journey from story to book; AI moods |
-| `#/explore` | 3D Library: shelves of spines, fanning collections, book detail panel |
-| `#/book` | Book: 3D cover, highlights, reviews, contributors, reading room |
+| `#/` | The Reading Room: pinned WebGL story (door → book opens → margins → helix library), Ask the book, live globe, story-to-chapter journey, mood picks, challenge, authors, community, the door |
+| `#/explore` | The Stacks: full-screen 3D helix — drag, filter by genre/mood/search, pull a book out; pre-orders, collections, weekly chart |
+| `#/book?b=<id>` | Book: 3D book that opens, page-turning reader with margin notes, themes, text size, ambient sound, spoiler dial, reviews |
 | `#/author` | Author profile: daily field logs, books, influence |
 | `#/community` | Community forum: threads, replies, AI summaries |
 | `#/feed` | Feed: posts, reactions, comments |

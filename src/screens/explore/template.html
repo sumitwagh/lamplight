@@ -1,73 +1,108 @@
-<div style="min-height:100vh;background:#06060B;color:#F2F0EA;font-family:Inter,system-ui,sans-serif;overflow-x:clip">
+<div class="lib">
 <!--nav-->
 
-<section style="max-width:1340px;margin:0 auto;padding:56px 56px 0">
-<div style="display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:24px">
-<div><div style="font:500 12px 'JetBrains Mono',monospace;letter-spacing:.2em;color:#F5B94A">EXPLORE · THE STACKS</div>
-<h1 style="margin:14px 0 0;font:600 clamp(44px,5.4vw,76px)/.96 'Space Grotesk',sans-serif;letter-spacing:-.045em">Pull a book off <em style="font-family:'Instrument Serif',serif;font-weight:400;color:#F5B94A">the shelf</em>.</h1></div>
-<p style="margin:0;max-width:380px;font-size:16px;line-height:1.6;color:#A09EB0">Hover a spine to lift it. Click to pull it out — it turns to face you. Switch shelves and the books rearrange themselves.</p>
+<section class="hall" aria-labelledby="libT">
+<div class="lib-stage" data-lib-stage data-js-frozen aria-hidden="true"></div>
+<div class="hall-fallback">
+<for-each list="{{shown}}" as="b"><a href="{{b.href}}" class="b3" style="--w:120px;--h:180px;--t:20px;{{b.vars}}"><span class="b3-in"><span class="b3-f"><span class="b3-m" style="{{b.motifStyle}}"></span><span class="b3-x"><span class="b3-g">{{b.genre}}</span><span class="b3-t">{{b.title}}</span><span class="b3-a">{{b.author}}</span></span><span class="b3-gl"></span></span><span class="b3-s"></span><span class="b3-p"></span></span></a></for-each>
 </div>
-<div role="tablist" aria-label="Shelves" style="display:flex;flex-wrap:wrap;gap:8px;margin-top:36px">
-<for-each list="{{cats}}" as="c"><button type="button" role="tab" aria-selected="{{c.on}}" onClick="{{c.pick}}" style="height:46px;padding:0 20px;border-radius:999px;font-size:14px;font-weight:500;cursor:pointer;transition:all .4s var(--settle);{{c.style}}">{{c.label}}</button></for-each>
-</div>
-</section>
 
-<section style="max-width:1340px;margin:0 auto;padding:40px 56px 0;display:flex;flex-wrap:wrap;gap:40px;align-items:stretch">
-<div onPointerMove="{{tilt}}" onPointerLeave="{{untilt}}" style="flex:1.5 1 560px;min-width:0;padding:36px 32px 28px;border-radius:30px;background:radial-gradient(700px 360px at 50% 110%,rgba(245,185,74,.14),transparent 70%),#0A0A12;border:1px solid rgba(255,255,255,.07);perspective:1600px">
-<div style="transform-style:preserve-3d;transform:rotateX(var(--rx,4deg)) rotateY(var(--ry,0deg));transition:transform .7s var(--settle)">
-<for-each list="{{shelves}}" as="sh">
-<div style="margin-bottom:34px">
-<div style="font:500 10px 'JetBrains Mono',monospace;letter-spacing:.18em;color:#8A889C;margin-bottom:12px">{{sh.label}}</div>
-<div style="display:flex;align-items:flex-end;gap:5px;min-height:290px;padding:0 8px;transform-style:preserve-3d">
-<for-each list="{{sh.books}}" as="s">
-<button type="button" class="spn" onClick="{{s.pick}}" aria-label="Pull out {{s.title}} by {{s.author}}" aria-pressed="{{s.on}}" style="width:{{s.w}}px;height:{{s.h}}px;background:{{s.bg}};color:{{s.ink}};view-transition-name:{{s.vt}};{{s.sel}}">
-<span style="width:56%;height:3px;background:{{s.accent}}"></span>
-<span style="writing-mode:vertical-rl;transform:rotate(180deg);font:400 19px 'Instrument Serif',serif;white-space:nowrap">{{s.title}}</span>
-<span style="writing-mode:vertical-rl;transform:rotate(180deg);font:600 9px 'JetBrains Mono',monospace;opacity:.8">{{s.short}}</span>
-</button>
-</for-each>
+<div class="hall-ui">
+<div class="hall-top">
+<div>
+<div class="kick">p. 024 — THE STACKS · {{countLabel}}</div>
+<h1 id="libT" class="hall-h" data-split>The library <em>turns to you.</em></h1>
 </div>
-<div class="plank"></div>
+<label class="lib-search"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><span class="sr">Search the library</span><input type="search" placeholder="Title, author or genre" value="{{q}}" onChange="{{onQ}}"></label>
 </div>
-</for-each>
+
+<div class="filters">
+<div class="seg" role="tablist" aria-label="Genre">
+<for-each list="{{genres}}" as="g"><button type="button" role="tab" aria-selected="{{g.on}}" onClick="{{g.pick}}">{{g.label}}<small>{{g.n}}</small></button></for-each>
+</div>
+<div class="moodrow" role="group" aria-label="Mood">
+<span class="kick v">MOOD</span>
+<for-each list="{{moods}}" as="m"><button type="button" aria-pressed="{{m.on}}" onClick="{{m.pick}}">{{m.label}}</button></for-each>
 </div>
 </div>
 
-<aside aria-live="polite" style="flex:1 1 360px;min-width:0;padding:36px;border-radius:30px;background:#0C0C14;border:1px solid rgba(255,255,255,.08);display:flex;flex-direction:column">
-<div style="font:500 11px 'JetBrains Mono',monospace;letter-spacing:.16em;color:#8A889C">PULLED FROM THE SHELF</div>
-<div style="display:flex;justify-content:center;padding:34px 0 10px">
-<a href="#/book" class="bk" aria-label="Open {{cur.title}}" style="--w:200px;--h:300px;--t:32px;view-transition-name:{{curVt}}">
-<div class="bk-in"><div class="fr" style="background:{{cur.bg}};color:{{cur.ink}}"><div style="position:absolute;background:{{cur.accent}};{{cur.shape}}"></div><div style="position:absolute;inset:0;padding:22px 20px 20px 30px;display:flex;flex-direction:column;justify-content:space-between"><div style="font:500 8px 'JetBrains Mono',monospace;letter-spacing:.16em">{{cur.genre}}</div><div style="font:400 30px/.94 'Instrument Serif',serif">{{cur.title}}</div><div style="font:500 9px Inter;letter-spacing:.1em">{{cur.caps}}</div></div><div class="gl"></div></div><div class="sp" style="background:{{cur.spine}}"></div><div class="pg"></div></div>
-</a>
+<div class="hint" aria-hidden="true"><span>Drag to turn</span><span>Hover to pull a book out</span><span>Click to open it</span><span>← → keys</span></div>
+<div class="turn">
+<button type="button" onClick="{{prev}}" aria-label="Turn the library left"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+<button type="button" onClick="{{next}}" aria-label="Turn the library right"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
 </div>
-<div class="in" style="animation-name:{{inName}}">
-<h2 style="margin:24px 0 0;font:600 28px/1.1 'Space Grotesk',sans-serif;letter-spacing:-.02em">{{cur.title}}</h2>
-<div style="margin-top:6px;font-size:14px;color:#A09EB0">{{cur.author}} · ★ {{cur.rating}} · {{cur.reading}} reading</div>
-<p style="margin:16px 0 0;font:400 20px/1.4 'Instrument Serif',serif;color:#D6D4E0">{{cur.blurb}}</p>
-<div style="margin-top:16px;padding:14px 16px;border-radius:16px;background:rgba(157,140,255,.08);border:1px solid rgba(157,140,255,.22);font-size:14px;line-height:1.55;color:#E6E3F2"><span style="color:#C9BFFF">Companion:</span> {{cur.why}}</div>
+<show-if value="{{empty}}"><div class="empty">Nothing on these shelves yet. <button type="button" onClick="{{clear}}">Clear filters</button></div></show-if>
 </div>
-<div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:auto;padding-top:22px">
-<a href="#/book" class="mag" onPointerMove="{{magnet}}" onPointerLeave="{{unmagnet}}" style="display:inline-flex;align-items:center;height:52px;padding:0 24px;border-radius:999px;background:#F5B94A;color:#120D04;font-weight:600">Open the book →</a>
-<button type="button" onClick="{{toggleSave}}" aria-pressed="{{savedOn}}" style="height:52px;padding:0 22px;border-radius:999px;border:1px solid rgba(255,255,255,.2);background:transparent;color:#F2F0EA;font-size:15px;font-weight:500;cursor:pointer">{{saveLabel}}</button>
+
+<div class="ltip" data-ltip aria-hidden="true" data-js-frozen><span class="tip-g"></span><b></b><span class="tip-a"></span><span class="tip-m"></span></div>
+
+<aside class="pulled" aria-live="polite" data-open="{{pulledOpen}}">
+<show-if value="{{cur}}">
+<button type="button" class="pulled-x" onClick="{{unpick}}" aria-label="Put the book back">×</button>
+<div class="kick">PULLED FROM THE SHELF · {{cur.genre}}</div>
+<h2 class="pulled-t">{{cur.title}}</h2>
+<a href="#/author" class="pulled-a"><span style="background:{{cur.ac}}">{{cur.initials}}</span>{{cur.author}}</a>
+<p class="pulled-b">{{cur.blurb}}</p>
+<blockquote class="pulled-q">“{{cur.hook}}”</blockquote>
+<dl class="pulled-s"><div><dt>Rating</dt><dd>{{cur.ratingLabel}}</dd></div><div><dt>Reading</dt><dd>{{cur.readingLabel}}</dd></div><div><dt>Pages</dt><dd>{{cur.pagesLabel}}</dd></div></dl>
+<div class="pulled-ai"><b>Companion</b> {{cur.why}}</div>
+<div class="pulled-c">
+<a href="{{cur.href}}" class="pill amber">{{cur.cta}} →</a>
+<button type="button" class="pill ghost" onClick="{{toggleSave}}" aria-pressed="{{savedOn}}">{{saveLabel}}</button>
 </div>
+</show-if>
 </aside>
+
+<ol class="sr" aria-label="Books in this view">
+<for-each list="{{shown}}" as="b"><li><a href="{{b.href}}">{{b.title}} by {{b.author}}</a></li></for-each>
+</ol>
 </section>
 
-<section aria-labelledby="colT" style="max-width:1340px;margin:0 auto;padding:120px 56px 120px">
-<div class="rv"><div style="font:500 12px 'JetBrains Mono',monospace;letter-spacing:.2em;color:#F5B94A">COLLECTIONS</div><h2 id="colT" style="margin:14px 0 0;font:600 clamp(32px,3.6vw,46px)/1.05 'Space Grotesk',sans-serif;letter-spacing:-.035em">Stacks that open as you arrive</h2></div>
-<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:22px;margin-top:44px">
-<for-each list="{{collections}}" as="c">
-<a href="#/book" class="stack" style="display:block;padding:36px 30px 30px;border-radius:28px;background:#0C0C14;border:1px solid rgba(255,255,255,.08);overflow:hidden">
-<div style="position:relative;height:260px;display:flex;justify-content:center">
-<div class="f1" style="position:absolute;bottom:0;left:calc(50% - 75px);width:150px;height:225px;border-radius:2px 5px 5px 2px;background:{{c.a.bg}};box-shadow:0 30px 50px -20px #000;transform:translateX(-120px) rotate(-12deg)"><div style="position:absolute;background:{{c.a.accent}};{{c.a.shape}}"></div></div>
-<div class="f3" style="position:absolute;bottom:0;left:calc(50% - 75px);width:150px;height:225px;border-radius:2px 5px 5px 2px;background:{{c.b.bg}};box-shadow:0 30px 50px -20px #000;transform:translateX(120px) rotate(12deg)"><div style="position:absolute;background:{{c.b.accent}};{{c.b.shape}}"></div></div>
-<div class="f2" style="position:absolute;bottom:0;left:calc(50% - 80px);width:160px;height:240px;border-radius:2px 5px 5px 2px;background:{{c.c.bg}};color:{{c.c.ink}};box-shadow:0 40px 60px -20px #000;z-index:2;overflow:hidden;transform:translateY(-26px)"><div style="position:absolute;background:{{c.c.accent}};{{c.c.shape}}"></div><div style="position:absolute;inset:0;padding:18px 16px 16px 22px;font:400 24px/.95 'Instrument Serif',serif">{{c.c.title}}</div></div>
+<section class="lsec" aria-labelledby="upT">
+<div class="lsec-h"><div><div class="kick t" data-reveal>p. 031 — LAUNCHING SOON</div><h2 id="upT" class="sec2" data-split>Pre-order the books <em>being written in public.</em></h2></div><div class="rail-btns"><button type="button" onClick="{{railPrev}}" aria-label="Scroll left">←</button><button type="button" onClick="{{railNext}}" aria-label="Scroll right">→</button></div></div>
+<div class="rail" data-rail tabindex="0" aria-label="Upcoming and new books, scroll sideways">
+<for-each list="{{rail}}" as="r">
+<article class="rcard">
+<a href="{{r.href}}" class="b3" style="--w:190px;--h:285px;--t:28px;{{r.vars}}" data-cursor="Open"><span class="b3-in"><span class="b3-f"><span class="b3-m" style="{{r.motifStyle}}"></span><span class="b3-x"><span class="b3-g">{{r.genre}}</span><span class="b3-t">{{r.title}}</span><span class="b3-a">{{r.author}}</span></span><span class="b3-gl"></span></span><span class="b3-s"></span><span class="b3-p"></span></span></a>
+<div class="rcard-k" style="color:{{r.kc}}">{{r.kicker}}</div>
+<div class="rcard-t">{{r.title}}</div>
+<div class="rcard-m">{{r.meta}}</div>
+<div class="rcard-bar"><i style="width:{{r.pct}}%"></i></div>
+</article>
+</for-each>
 </div>
-<div style="margin-top:30px;font:500 11px 'JetBrains Mono',monospace;letter-spacing:.14em;color:{{c.color}}">{{c.kicker}}</div>
-<div style="margin-top:10px;font:600 24px 'Space Grotesk',sans-serif;letter-spacing:-.02em">{{c.title}}</div>
-<div style="margin-top:8px;font-size:14px;line-height:1.5;color:#A09EB0">{{c.desc}}</div>
+</section>
+
+<section class="lsec" aria-labelledby="colT">
+<div class="lsec-h"><div><div class="kick" data-reveal>p. 038 — COLLECTIONS</div><h2 id="colT" class="sec2" data-split>Stacks that <em>fan open</em> as you arrive.</h2></div></div>
+<div class="cols">
+<for-each list="{{collections}}" as="c">
+<a href="{{c.href}}" class="col" data-reveal style="--d:{{c.d}};--c:{{c.color}}">
+<span class="fan">
+<for-each list="{{c.books}}" as="b"><span class="fan-b" style="--k:{{b.k}};{{b.vars}}"><span class="b3-m" style="{{b.motifStyle}}"></span><span class="fan-t">{{b.title}}</span></span></for-each>
+</span>
+<span class="col-k">{{c.kicker}}</span>
+<span class="col-t">{{c.title}}</span>
+<span class="col-d">{{c.desc}}</span>
+<span class="col-n">{{c.count}} books · {{c.readers}} readers →</span>
 </a>
 </for-each>
 </div>
 </section>
+
+<section class="lsec charts" aria-labelledby="chT">
+<div class="lsec-h"><div><div class="kick v" data-reveal>p. 044 — THIS WEEK ON FOLIO</div><h2 id="chT" class="sec2" data-split>What the room is <em>reading.</em></h2></div></div>
+<ol class="chart">
+<for-each list="{{chart}}" as="c">
+<li data-reveal style="--d:{{c.d}}"><a href="{{c.href}}" class="crow">
+<span class="crow-n">{{c.n}}</span>
+<span class="crow-sw" style="{{c.vars}}"><span class="b3-m" style="{{c.motifStyle}}"></span></span>
+<span class="crow-x"><b>{{c.title}}</b><small>{{c.author}} · {{c.genre}}</small></span>
+<span class="crow-bar"><i style="width:{{c.pct}}%"></i></span>
+<span class="crow-r">{{c.readingLabel}}<small>{{c.delta}}</small></span>
+</a></li>
+</for-each>
+</ol>
+</section>
+<div class="lib-foot">Concept 01 · The Reading Room · sample catalogue of 24 books</div>
 </div>

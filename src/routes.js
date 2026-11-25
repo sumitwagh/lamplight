@@ -8,8 +8,11 @@ import LibraryScreen from './screens/explore/screen.js';
 import exploreMarkup from './screens/explore/template.html?raw';
 import exploreStyle from './screens/explore/style.css?inline';
 import BookScreen from './screens/book/screen.js';
-import bookMarkup from './screens/book/template.html?raw';
+import bookTemplate from './screens/book/template.html?raw';
+import { expandPages } from './screens/book/page.js';
 import bookStyle from './screens/book/style.css?inline';
+
+const bookMarkup = expandPages(bookTemplate);
 import AuthorScreen from './screens/author/screen.js';
 import authorMarkup from './screens/author/template.html?raw';
 import authorStyle from './screens/author/style.css?inline';
@@ -30,13 +33,13 @@ import dashboardMarkup from './screens/dashboard/template.html?raw';
 import dashboardStyle from './screens/dashboard/style.css?inline';
 
 export const ROUTES = {
-  '/': { Screen: ReadingRoomScreen, markup: homeMarkup, style: homeStyle, nav: 'home', title: 'The Reading Room' },
-  '/explore': { Screen: LibraryScreen, markup: exploreMarkup, style: exploreStyle, nav: 'explore', title: '3D Library' },
-  '/book': { Screen: BookScreen, markup: bookMarkup, style: bookStyle, nav: 'explore', title: 'Book' },
-  '/author': { Screen: AuthorScreen, markup: authorMarkup, style: authorStyle, nav: 'none', title: 'Author' },
-  '/community': { Screen: CommunityScreen, markup: communityMarkup, style: communityStyle, nav: 'forum', title: 'Community' },
-  '/feed': { Screen: FeedScreen, markup: feedMarkup, style: feedStyle, nav: 'feed', title: 'Feed' },
-  '/leaderboard': { Screen: LeaderboardScreen, markup: leaderboardMarkup, style: leaderboardStyle, nav: 'leaders', title: 'Leaderboard' },
-  '/studio': { Screen: StudioScreen, markup: studioMarkup, style: studioStyle, nav: 'studio', title: 'AI Studio' },
-  '/dashboard': { Screen: DashboardScreen, markup: dashboardMarkup, style: dashboardStyle, nav: 'none', title: 'Author dashboard' },
+  '/': { page: '001', Screen: ReadingRoomScreen, markup: homeMarkup, style: homeStyle, nav: 'home', title: 'The Reading Room' },
+  '/explore': { page: '024', Screen: LibraryScreen, markup: exploreMarkup, style: exploreStyle, nav: 'explore', title: '3D Library' },
+  '/book': { page: '071', Screen: BookScreen, markup: bookMarkup, style: bookStyle, nav: 'explore', title: 'Book' },
+  '/author': { page: '112', Screen: AuthorScreen, markup: authorMarkup, style: authorStyle, nav: 'none', title: 'Author' },
+  '/community': { page: '148', Screen: CommunityScreen, markup: communityMarkup, style: communityStyle, nav: 'forum', title: 'Community' },
+  '/feed': { page: '186', Screen: FeedScreen, markup: feedMarkup, style: feedStyle, nav: 'feed', title: 'Feed' },
+  '/leaderboard': { page: '233', Screen: LeaderboardScreen, markup: leaderboardMarkup, style: leaderboardStyle, nav: 'leaders', title: 'Leaderboard' },
+  '/studio': { page: '270', Screen: StudioScreen, markup: studioMarkup, style: studioStyle, nav: 'studio', title: 'AI Studio' },
+  '/dashboard': { page: '318', Screen: DashboardScreen, markup: dashboardMarkup, style: dashboardStyle, nav: 'none', title: 'Author dashboard' },
 };

@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "Folio \u00b7 The Reading Room: Immersive 3D: a book that opens as you scroll, a 3D library and an AI companion.",
+  "description": "Folio · The Reading Room: Immersive 3D: a book that opens as you scroll, a 3D library and an AI companion.",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -14,5 +14,9 @@
   },
   "engines": {
     "node": ">=20"
+  },
+  "dependencies": {
+    "lenis": "^1.3.28",
+    "three": "^0.170.0"
   }
 }

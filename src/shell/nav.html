@@ -1,22 +1,19 @@
-<header class="topnav" style="position:relative;z-index:20;font-family:Inter,system-ui,sans-serif;color:#F2F0EA;background:rgba(6,6,11,.78);backdrop-filter:blur(18px);border-bottom:1px solid rgba(255,255,255,.08)">
-<div style="max-width:1340px;margin:0 auto;padding:14px 48px;display:flex;flex-wrap:wrap;align-items:center;gap:16px 28px">
-<a href="#/" aria-label="Folio home" style="display:flex;align-items:center;gap:10px;color:#F2F0EA;text-decoration:none">
-<svg width="30" height="30" viewBox="0 0 32 32" fill="none" aria-hidden="true"><path d="M6 7l10 4v16L6 23z" fill="#F5B94A"/><path d="M26 7l-10 4v16l10-4z" fill="#9D8CFF"/><path d="M16 11V27" stroke="#06060B" stroke-width="1.5"/></svg>
-<span style="font:700 22px 'Space Grotesk',sans-serif;letter-spacing:-.04em">Folio<span style="color:#F5B94A">.</span></span>
+<header class="topnav">
+<div class="topnav-in">
+<a href="#/" class="brand" aria-label="Folio home">
+<svg width="28" height="28" viewBox="0 0 32 32" fill="none" aria-hidden="true"><path d="M6 7l10 4v16L6 23z" fill="#F5B94A"/><path d="M26 7l-10 4v16l10-4z" fill="#9D8CFF"/><path d="M16 11V27" stroke="#07070C" stroke-width="1.5"/></svg>
+<span class="brand-w">Folio<i>.</i></span>
+<span class="brand-p" aria-hidden="true">p. {{nav.page}}</span>
 </a>
-<nav class="topnav-links" aria-label="Primary" style="display:flex;flex-wrap:wrap;gap:4px;flex:1 1 auto">
+<nav class="topnav-links" aria-label="Primary">
 <for-each list="{{nav.links}}" as="l">
-<a href="{{l.href}}" aria-current="{{l.current}}" style="display:inline-flex;align-items:center;height:40px;padding:0 16px;border-radius:999px;font-size:14px;font-weight:500;text-decoration:none;transition:background .3s,color .3s;{{l.style}}">{{l.label}}</a>
+<a href="{{l.href}}" aria-current="{{l.current}}" class="tl"><span class="tl-n" aria-hidden="true">{{l.n}}</span>{{l.label}}</a>
 </for-each>
 </nav>
-<div style="display:flex;align-items:center;gap:10px">
-<label style="display:flex;align-items:center;gap:8px;height:44px;padding:0 14px;border-radius:999px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.04);color:#A09EB0">
-<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
-<span style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Search</span>
-<input type="search" placeholder="Ask for a book, mood or author…" style="width:200px;background:transparent;border:0;outline:none;color:#F2F0EA;font:400 13px Inter,sans-serif">
-</label>
-<a href="#/dashboard" style="display:inline-flex;align-items:center;height:44px;padding:0 18px;border-radius:999px;background:#F2F0EA;color:#0A0A10;font-size:14px;font-weight:600;text-decoration:none">Author dashboard</a>
-<a href="#/feed" aria-label="Your profile, Aanya Rao" style="width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:#9D8CFF;color:#0E0A22;font:600 14px Inter,sans-serif;text-decoration:none;box-shadow:0 0 0 2px #06060B,0 0 0 3px rgba(157,140,255,.6)">AR</a>
+<div class="topnav-act">
+<button type="button" class="ask" data-ask aria-label="Ask Folio (Ctrl or Command K)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 3l1.8 4.9L19 9.7l-4.2 3.2 1.4 5.1L12 15.2 7.8 18l1.4-5.1L5 9.7l5.2-1.8z"/></svg><span>Ask Folio</span><kbd>⌘K</kbd></button>
+<a href="#/dashboard" class="dash">For authors</a>
+<a href="#/feed" class="me" aria-label="Your profile, Aanya Rao">AR<i aria-hidden="true"></i></a>
 </div>
 </div>
 </header>

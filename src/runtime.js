@@ -10,6 +10,8 @@
  *  - Attributes named onClick, onChange, onPointerDown… bind to functions in bindings().
  *  - On SVG elements write data-svg-d="{{path}}" or data-svg-points="{{pts}}": the runtime sets the
  *    real attribute once the value is known (avoids browser parse warnings).
+ *  - Classes named is-* and attributes named data-js-* are owned by scripts and kept on re-render;
+ *    an element with data-js-frozen keeps its children as they are.
  *  - Calling this.setState({...}) re-renders. The DOM is patched in place, so CSS
  *    transitions keep running and inputs keep focus.
  */
@@ -34,6 +36,7 @@ const EVENTS = {
   onchange: 'input',
   onfocus: 'focus',
   onkeydown: 'keydown',
+  onsubmit: 'submit',
   onpointerdown: 'pointerdown',
   onpointermove: 'pointermove',
   onpointerup: 'pointerup',
@@ -83,10 +86,8 @@ function expand(node, scopes) {
     for (const item of list) {
       const copy = node.cloneNode(true);
       const scope = scopes.concat([{ [as]: item }]);
-      for (const child of [...copy.childNodes]) {
-        expand(child, scope);
-        if (child.parentNode === copy) out.appendChild(child);
-      }
+      for (const child of [...copy.childNodes]) expand(child, scope);
+      out.append(...copy.childNodes);
     }
     node.replaceWith(out);
     return;
@@ -98,10 +99,8 @@ function expand(node, scopes) {
       return;
     }
     const out = document.createDocumentFragment();
-    for (const child of [...node.childNodes]) {
-      expand(child, scopes);
-      if (child.parentNode === node) out.appendChild(child);
-    }
+    for (const child of [...node.childNodes]) expand(child, scopes);
+    out.append(...node.childNodes);
     node.replaceWith(out);
     return;
   }
@@ -149,8 +148,23 @@ function patch(current, next) {
     if (current.nodeValue !== next.nodeValue) current.nodeValue = next.nodeValue;
     return;
   }
-  for (const attr of [...current.attributes]) if (!next.hasAttribute(attr.name)) current.removeAttribute(attr.name);
-  for (const attr of [...next.attributes]) if (current.getAttribute(attr.name) !== attr.value) current.setAttribute(attr.name, attr.value);
+  // Attributes named data-js-* and classes named is-* belong to scripts (reveals, split text…)
+  // and survive re-renders.
+  for (const attr of [...current.attributes]) {
+    if (next.hasAttribute(attr.name) || attr.name.startsWith('data-js')) continue;
+    const keep = attr.name === 'class' ? [...current.classList].filter((c) => c.startsWith('is-')) : [];
+    if (keep.length) current.setAttribute('class', keep.join(' '));
+    else current.removeAttribute(attr.name);
+  }
+  for (const attr of [...next.attributes]) {
+    let value = attr.value;
+    if (attr.name === 'class') {
+      const keep = [...current.classList].filter((c) => c.startsWith('is-'));
+      if (keep.length) value = (value + ' ' + keep.join(' ')).trim();
+    }
+    if (current.getAttribute(attr.name) !== value) current.setAttribute(attr.name, value);
+  }
+  if (current.hasAttribute('data-js-frozen')) return;
   if (current.tagName === 'INPUT') {
     const value = next.getAttribute('value') || '';
     const focused = document.activeElement === current;
