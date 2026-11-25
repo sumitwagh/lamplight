@@ -1,0 +1,88 @@
+<div style="min-height:100vh;background:#06060B;color:#F2F0EA;font-family:Inter,system-ui,sans-serif;overflow-x:hidden">
+<!--nav-->
+
+<section onMouseMove="{{onMove}}" onMouseLeave="{{onLeave}}" aria-label="Profile banner" style="position:relative;height:420px;overflow:hidden;background:#0B2726">
+<div class="lyr" style="inset:-40px;transform:translate({{x1}}px,{{y1}}px);background:radial-gradient(500px 360px at 78% 30%,rgba(245,185,74,.55),transparent 70%),radial-gradient(700px 400px at 10% 100%,rgba(157,140,255,.25),transparent 70%)"></div>
+<div class="lyr" aria-hidden="true" style="left:0;right:0;top:120px;text-align:center;transform:translate({{x2}}px,{{y2}}px);font:700 clamp(120px,16vw,240px)/1 'Space Grotesk',sans-serif;letter-spacing:-.06em;color:transparent;-webkit-text-stroke:1px rgba(244,235,215,.28);white-space:nowrap">OKAFOR</div>
+<div class="lyr" style="right:12%;top:60px;transform:translate({{x3}}px,{{y3}}px)"><div class="fl"><a href="#/book" class="bk" aria-label="The Cartographer of Silence" style="--w:170px;--h:255px;--t:28px"><div class="bk-in"><div class="bk-fr" style="background:#123B3A;color:#F4EBD7"><div style="position:absolute;width:80%;height:54%;border-radius:50%;top:-10%;right:-24%;background:#F5B94A"></div><div class="bk-tx"><div style="font:500 8px 'JetBrains Mono';letter-spacing:.16em">LITERARY SCI-FI</div><div style="font-family:'Instrument Serif',serif;font-size:25px;line-height:.95">The Cartographer of Silence</div><div style="font:500 9px Inter">MIRA OKAFOR</div></div><div class="gl"></div></div><div class="bk-sp" style="background:#0B2726"></div><div class="bk-pg"></div></div></a></div></div>
+<div class="lyr" style="right:26%;top:150px;transform:translate({{x2}}px,{{y2}}px)"><div class="fl" style="animation-delay:-2s"><div class="bk" style="--w:120px;--h:180px;--t:20px"><div class="bk-in"><div class="bk-fr" style="background:#E8DCC4;color:#20302F"><div style="position:absolute;left:0;right:0;bottom:0;height:40%;background:#2D6A68"></div><div class="bk-tx"><div style="font-family:'Instrument Serif',serif;font-size:19px;line-height:.95">Low Tide Atlas</div><div style="font:500 8px Inter">MIRA OKAFOR</div></div><div class="gl"></div></div><div class="bk-sp" style="background:#BBAE95"></div><div class="bk-pg"></div></div></div></div></div>
+<div class="lyr" style="right:4%;top:210px;transform:translate({{x1}}px,{{y1}}px)"><div class="fl" style="animation-delay:-4s"><div class="bk" style="--w:110px;--h:165px;--t:18px"><div class="bk-in"><div class="bk-fr" style="background:#1B1530;color:#F5B94A;border:1px dashed rgba(245,185,74,.6)"><div class="bk-tx"><div style="font:500 7px 'JetBrains Mono';letter-spacing:.14em">COMING MAR 2027</div><div style="font-family:'Instrument Serif',serif;font-size:18px;line-height:.95">The Lantern Census</div><div style="font:500 8px Inter">MIRA OKAFOR</div></div><div class="gl"></div></div><div class="bk-sp" style="background:#120E22"></div><div class="bk-pg"></div></div></div></div></div>
+</section>
+
+<section style="max-width:1340px;margin:-88px auto 0;padding:0 48px;position:relative">
+<div style="display:flex;flex-wrap:wrap;gap:32px;align-items:flex-end">
+<div style="width:168px;height:168px;border-radius:50%;background:#F5B94A;color:#1A1205;display:grid;place-items:center;font:600 54px 'Space Grotesk';box-shadow:0 0 0 6px #06060B,0 0 0 7px rgba(245,185,74,.6),0 30px 60px -20px #000">MO</div>
+<div style="flex:1 1 400px;min-width:0;padding-bottom:8px">
+<div style="display:flex;flex-wrap:wrap;align-items:center;gap:10px"><h1 style="margin:0;font:600 52px/1 'Space Grotesk',sans-serif;letter-spacing:-.04em">Mira Okafor</h1><span style="padding:6px 10px;border-radius:999px;background:rgba(245,185,74,.14);color:#F5B94A;font:500 11px 'JetBrains Mono',monospace">VERIFIED AUTHOR</span></div>
+<p style="margin:12px 0 0;max-width:620px;font-size:16px;line-height:1.6;color:#A09EB0">Urban planner turned novelist. I write about cities, grief and the maps we make to survive both. A new field log every morning, 7 AM Lisbon time.</p>
+</div>
+<div style="display:flex;gap:10px;padding-bottom:12px">
+<button type="button" onClick="{{toggleFollow}}" style="height:52px;padding:0 28px;border-radius:999px;font-size:15px;font-weight:600;cursor:pointer;{{followStyle}}">{{followLabel}}</button>
+<a href="#/community" style="height:52px;padding:0 22px;border-radius:999px;border:1px solid rgba(255,255,255,.2);display:inline-flex;align-items:center;font-size:15px;font-weight:500">Ask in Q&amp;A</a>
+</div>
+</div>
+<div style="display:flex;flex-wrap:wrap;gap:40px;margin-top:36px;padding:24px 0;border-top:1px solid rgba(255,255,255,.08);border-bottom:1px solid rgba(255,255,255,.08)">
+<div><div style="font:600 28px 'Space Grotesk'">{{followers}}</div><div style="font-size:13px;color:#8A889C">followers</div></div>
+<div><div style="font:600 28px 'Space Grotesk'">3</div><div style="font-size:13px;color:#8A889C">books</div></div>
+<div><div style="font:600 28px 'Space Grotesk'">412</div><div style="font-size:13px;color:#8A889C">daily stories</div></div>
+<div><div style="font:600 28px 'Space Grotesk'">9</div><div style="font-size:13px;color:#8A889C">stories became chapters</div></div>
+<div><div style="font:600 28px 'Space Grotesk';color:#F5B94A">128</div><div style="font-size:13px;color:#8A889C">day posting streak</div></div>
+</div>
+</section>
+
+<section style="max-width:1340px;margin:0 auto;padding:56px 48px 0;display:flex;flex-wrap:wrap;gap:32px">
+<div style="flex:2 1 560px;min-width:0">
+<div style="display:flex;justify-content:space-between;align-items:center;gap:12px"><div style="font:500 12px 'JetBrains Mono',monospace;letter-spacing:.2em;color:#F5B94A">DAILY FIELD LOGS · STORY → BOOK</div><a href="#/feed" style="font-size:14px;color:#A09EB0">See in feed →</a></div>
+<div style="position:relative;margin-top:28px;padding-left:36px">
+<div style="position:absolute;left:11px;top:8px;bottom:8px;width:2px;background:rgba(255,255,255,.1)"></div>
+<for-each list="{{logs}}" as="l">
+<article style="position:relative;margin-bottom:18px">
+<span style="position:absolute;left:-32px;top:26px;width:16px;height:16px;border-radius:50%;{{l.dot}}"></span>
+<div class="card" style="padding:26px;border-radius:22px;border:1px solid rgba(255,255,255,.08);background:#0C0C14">
+<div style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;font:500 11px 'JetBrains Mono',monospace;letter-spacing:.1em;color:#8A889C"><span>{{l.when}}</span><span style="color:{{l.badgeColor}}">{{l.badge}}</span></div>
+<p style="margin:14px 0 0;font-family:'Instrument Serif',serif;font-size:25px;line-height:1.3">{{l.text}}</p>
+<div style="display:flex;flex-wrap:wrap;gap:16px;margin-top:16px;font-size:13px;color:#A09EB0"><span>♥ {{l.likes}}</span><span>{{l.replies}} replies</span><span style="color:#C9BFFF">{{l.ai}}</span></div>
+</div>
+</article>
+</for-each>
+</div>
+</div>
+
+<aside style="flex:1 1 340px;min-width:0;display:flex;flex-direction:column;gap:16px">
+<div style="padding:28px;border-radius:24px;border:1px solid rgba(255,255,255,.1);background:linear-gradient(160deg,#141224,#0C0C14)">
+<div style="display:flex;justify-content:space-between;align-items:center"><div style="font:500 11px 'JetBrains Mono',monospace;letter-spacing:.16em;color:#8A889C">AUTHOR INFLUENCE SCORE</div><a href="#/leaderboard" style="font-size:13px;color:#F5B94A">#1 this week</a></div>
+<div style="display:flex;align-items:center;gap:22px;margin-top:20px">
+<svg width="120" height="120" viewBox="0 0 120 120" role="img" aria-label="Influence score 94 out of 100"><circle cx="60" cy="60" r="50" fill="none" stroke="rgba(255,255,255,.08)" stroke-width="10"/><circle cx="60" cy="60" r="50" fill="none" stroke="#F5B94A" stroke-width="10" stroke-linecap="round" stroke-dasharray="295 314" transform="rotate(-90 60 60)"/><text x="60" y="68" text-anchor="middle" fill="#F2F0EA" font-family="Space Grotesk" font-weight="600" font-size="32">94</text></svg>
+<div style="font-size:13px;line-height:1.55;color:#A09EB0">Top 1% of authors. Up <span style="color:#6FD6C4">6 points</span> since her Q&amp;A last Saturday.</div>
+</div>
+<div style="display:flex;flex-direction:column;gap:12px;margin-top:20px">
+<for-each list="{{score}}" as="sc">
+<div><div style="display:flex;justify-content:space-between;font-size:13px"><span style="color:#D6D4E0">{{sc.label}}</span><span style="font-family:'JetBrains Mono',monospace;color:#F2F0EA">{{sc.v}}</span></div><div style="height:5px;margin-top:6px;border-radius:5px;background:rgba(255,255,255,.08)"><div style="height:100%;border-radius:5px;background:{{sc.color}};width:{{sc.v}}%"></div></div></div>
+</for-each>
+</div>
+</div>
+<div style="padding:28px;border-radius:24px;border:1px solid rgba(245,185,74,.3);background:rgba(245,185,74,.06)">
+<div style="font:500 11px 'JetBrains Mono',monospace;letter-spacing:.16em;color:#F5B94A">UPCOMING RELEASE · 14 MARCH 2027</div>
+<div style="margin-top:12px;font:600 26px/1.1 'Space Grotesk';letter-spacing:-.02em">The Lantern Census</div>
+<p style="margin:10px 0 0;font-size:14px;line-height:1.55;color:#D6D4E0">A city counts its lights once a century. This year, one is missing. Grew out of field logs #301–#344.</p>
+<div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-top:18px;text-align:center">
+<div style="padding:10px 0;border-radius:12px;background:rgba(0,0,0,.3)"><div style="font:600 22px 'Space Grotesk'">109</div><div style="font-size:11px;color:#8A889C">days</div></div>
+<div style="padding:10px 0;border-radius:12px;background:rgba(0,0,0,.3)"><div style="font:600 22px 'Space Grotesk'">06</div><div style="font-size:11px;color:#8A889C">hrs</div></div>
+<div style="padding:10px 0;border-radius:12px;background:rgba(0,0,0,.3)"><div style="font:600 22px 'Space Grotesk'">5.2k</div><div style="font-size:11px;color:#8A889C">waitlist</div></div>
+<div style="padding:10px 0;border-radius:12px;background:rgba(0,0,0,.3)"><div style="font:600 22px 'Space Grotesk'">3</div><div style="font-size:11px;color:#8A889C">sneak peeks</div></div>
+</div>
+<button type="button" onClick="{{toggleNotify}}" style="width:100%;height:48px;margin-top:16px;border-radius:999px;border:0;font-size:14px;font-weight:600;cursor:pointer;{{notifyStyle}}">{{notifyLabel}}</button>
+</div>
+<div style="padding:28px;border-radius:24px;border:1px solid rgba(255,255,255,.08);background:#0C0C14">
+<div style="font:500 11px 'JetBrains Mono',monospace;letter-spacing:.16em;color:#8A889C">BADGES</div>
+<div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:14px">
+<span style="padding:8px 12px;border-radius:12px;background:rgba(255,255,255,.05);font-size:13px">◆ Community Builder</span>
+<span style="padding:8px 12px;border-radius:12px;background:rgba(255,255,255,.05);font-size:13px">✶ 100-Day Streak</span>
+<span style="padding:8px 12px;border-radius:12px;background:rgba(255,255,255,.05);font-size:13px">◎ Q&amp;A Host</span>
+<span style="padding:8px 12px;border-radius:12px;background:rgba(255,255,255,.05);font-size:13px">▲ Reader's Choice 2026</span>
+</div>
+</div>
+</aside>
+</section>
+<div style="height:120px"></div>
+</div>

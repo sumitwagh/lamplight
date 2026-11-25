@@ -1,0 +1,83 @@
+<div style="min-height:100vh;background:#06060B;color:#F2F0EA;font-family:Inter,system-ui,sans-serif;overflow-x:hidden">
+<!--nav-->
+
+<section style="max-width:1340px;margin:0 auto;padding:44px 48px 0">
+<div style="font:500 12px 'JetBrains Mono',monospace;letter-spacing:.2em;color:#C9BFFF">✶ AI CONTENT STUDIO</div>
+<h1 style="margin:12px 0 0;max-width:900px;font:600 clamp(38px,4.4vw,60px)/1 'Space Grotesk',sans-serif;letter-spacing:-.045em">Turn what your readers say into what you <em style="font-family:'Instrument Serif',serif;font-weight:400;color:#C9BFFF">write next</em>.</h1>
+</section>
+
+<section style="max-width:1340px;margin:0 auto;padding:36px 48px 120px;display:flex;flex-wrap:wrap;gap:24px;align-items:flex-start">
+<div style="flex:1 1 380px;min-width:0;display:flex;flex-direction:column;gap:16px">
+<div style="padding:24px;border-radius:24px;border:1px solid rgba(255,255,255,.08);background:#0C0C14">
+<div style="font:500 11px 'JetBrains Mono',monospace;letter-spacing:.16em;color:#8A889C">1 · PICK COMMUNITY SIGNALS</div>
+<div style="display:flex;flex-direction:column;gap:10px;margin-top:14px">
+<for-each list="{{sources}}" as="o">
+<button type="button" class="opt" onClick="{{o.pick}}" aria-pressed="{{o.on}}" style="text-align:left;display:flex;gap:14px;align-items:flex-start;padding:16px;border-radius:16px;cursor:pointer;color:#F2F0EA;{{o.style}}">
+<span style="flex:0 0 auto;width:22px;height:22px;margin-top:2px;border-radius:7px;display:grid;place-items:center;font-size:13px;{{o.box}}">{{o.check}}</span>
+<span style="flex:1;min-width:0"><span style="display:block;font-weight:600;font-size:14px;line-height:1.35">{{o.title}}</span><span style="display:block;margin-top:4px;font-size:12px;color:#8A889C">{{o.meta}}</span></span>
+</button>
+</for-each>
+</div>
+</div>
+<div style="padding:24px;border-radius:24px;border:1px solid rgba(255,255,255,.08);background:#0C0C14">
+<div style="font:500 11px 'JetBrains Mono',monospace;letter-spacing:.16em;color:#8A889C">2 · CHOOSE A FORMAT</div>
+<div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:14px">
+<for-each list="{{formats}}" as="f">
+<button type="button" class="opt" onClick="{{f.pick}}" style="text-align:left;padding:16px;border-radius:16px;cursor:pointer;color:#F2F0EA;{{f.style}}"><span style="display:block;font-weight:600;font-size:15px">{{f.label}}</span><span style="display:block;margin-top:4px;font-size:12px;color:#8A889C">{{f.hint}}</span></button>
+</for-each>
+</div>
+<div style="font:500 11px 'JetBrains Mono',monospace;letter-spacing:.16em;color:#8A889C;margin-top:22px">TONE</div>
+<div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:10px">
+<for-each list="{{tones}}" as="t"><button type="button" onClick="{{t.pick}}" style="height:40px;padding:0 14px;border-radius:999px;font-size:13px;cursor:pointer;{{t.style}}">{{t.label}}</button></for-each>
+</div>
+</div>
+<button type="button" onClick="{{generate}}" style="height:60px;border-radius:999px;border:0;background:#9D8CFF;color:#0E0A22;font-weight:600;font-size:16px;cursor:pointer;box-shadow:0 20px 50px -16px rgba(157,140,255,.7)">{{genLabel}}</button>
+</div>
+
+<div style="flex:999 1 560px;min-width:0;position:relative;perspective:1600px;padding-top:12px">
+<div aria-hidden="true" style="position:absolute;left:28px;right:28px;top:0;height:200px;border-radius:28px;background:#14131F;border:1px solid rgba(255,255,255,.06);transform:translateZ(-80px) rotateX(6deg)"></div>
+<div aria-hidden="true" style="position:absolute;left:14px;right:14px;top:6px;height:200px;border-radius:28px;background:#181726;border:1px solid rgba(255,255,255,.07);transform:translateZ(-40px) rotateX(3deg)"></div>
+<div style="position:relative;border-radius:28px;border:1px solid rgba(157,140,255,.3);background:#0E0D18;box-shadow:0 60px 120px -40px rgba(0,0,0,.9),0 0 0 1px rgba(255,255,255,.02) inset;overflow:hidden">
+<div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px;padding:18px 28px;border-bottom:1px solid rgba(255,255,255,.08);font:500 12px 'JetBrains Mono',monospace;color:#8A889C">
+<span>DRAFT · {{fmtUpper}} · {{toneUpper}}</span><span style="color:{{statusColor}}">{{status}}</span>
+</div>
+<show-if value="{{isIdle}}">
+<div style="padding:72px 40px;text-align:center">
+<div style="width:88px;height:88px;margin:0 auto;border-radius:50%;border:1px dashed rgba(157,140,255,.5);display:grid;place-items:center;color:#C9BFFF;font-size:30px">✶</div>
+<div style="margin-top:22px;font:600 24px 'Space Grotesk'">Pick signals and a format</div>
+<p style="margin:10px auto 0;max-width:420px;font-size:15px;line-height:1.6;color:#A09EB0">Folio reads every reply, finds what your readers care about, and drafts it in your voice — with the comments it learned from cited inline.</p>
+</div>
+</show-if>
+<show-if value="{{isLoading}}">
+<div style="padding:40px">
+<div style="display:flex;align-items:center;gap:14px"><span class="orb" style="width:14px;height:14px;border-radius:50%;background:#9D8CFF;box-shadow:0 0 20px #9D8CFF"></span><span style="font-size:15px;color:#D6D4E0">Reading {{replyCount}} replies, finding the threads that matter…</span></div>
+<div class="shim" style="height:34px;width:70%;margin-top:30px"></div>
+<div class="shim" style="height:14px;margin-top:22px"></div><div class="shim" style="height:14px;margin-top:12px"></div><div class="shim" style="height:14px;width:82%;margin-top:12px"></div>
+<div class="shim" style="height:14px;margin-top:28px"></div><div class="shim" style="height:14px;width:64%;margin-top:12px"></div>
+</div>
+</show-if>
+<show-if value="{{isDone}}">
+<div class="rise" style="padding:36px 40px 32px">
+<div style="font:500 11px 'JetBrains Mono',monospace;letter-spacing:.16em;color:#C9BFFF">{{out.kicker}}</div>
+<h2 style="margin:12px 0 0;font-family:'Instrument Serif',serif;font-weight:400;font-size:46px;line-height:1.02">{{out.title}}</h2>
+<div style="display:flex;flex-direction:column;gap:16px;margin-top:22px">
+<for-each list="{{out.body}}" as="b"><p style="margin:0;font-size:17px;line-height:1.7;color:#D6D4E0">{{b}}</p></for-each>
+</div>
+<div style="margin-top:24px;padding:16px 18px;border-radius:16px;background:rgba(157,140,255,.08);border:1px solid rgba(157,140,255,.2)">
+<div style="font:500 11px 'JetBrains Mono',monospace;letter-spacing:.14em;color:#C9BFFF">LEARNED FROM YOUR READERS</div>
+<div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:10px">
+<for-each list="{{out.cites}}" as="c"><a href="#/community" style="padding:6px 10px;border-radius:999px;background:rgba(6,6,11,.6);border:1px solid rgba(255,255,255,.1);font-size:12px;color:#D6D4E0">{{c}}</a></for-each>
+</div>
+</div>
+<div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:24px">
+<button type="button" onClick="{{publish}}" style="height:50px;padding:0 22px;border-radius:999px;border:0;font-weight:600;font-size:15px;cursor:pointer;{{pubStyle}}">{{pubLabel}}</button>
+<button type="button" style="height:50px;padding:0 20px;border-radius:999px;border:1px solid rgba(255,255,255,.18);background:transparent;color:#F2F0EA;font-size:14px;cursor:pointer;{{schedStyle}}" onClick="{{schedule}}" aria-pressed="{{schedOn}}">{{schedLabel}}</button>
+<button type="button" onClick="{{generate}}" style="height:50px;padding:0 20px;border-radius:999px;border:1px solid rgba(157,140,255,.35);background:transparent;color:#C9BFFF;font-size:14px;cursor:pointer">Regenerate</button>
+<show-if value="{{published}}"><a href="#/feed" style="height:50px;padding:0 6px;display:inline-flex;align-items:center;color:#F5B94A;font-size:14px;font-weight:500">See it in the feed →</a></show-if>
+</div>
+</div>
+</show-if>
+</div>
+</div>
+</section>
+</div>

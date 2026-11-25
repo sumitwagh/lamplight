@@ -1,0 +1,75 @@
+<div style="min-height:100vh;background:#06060B;color:#F2F0EA;font-family:Inter,system-ui,sans-serif;overflow-x:hidden">
+<!--nav-->
+
+<section style="max-width:1180px;margin:0 auto;padding:44px 48px 120px;display:flex;flex-wrap:wrap;gap:28px;align-items:flex-start">
+<div style="flex:999 1 560px;min-width:0">
+<div style="display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:16px">
+<div><div style="font:500 12px 'JetBrains Mono',monospace;letter-spacing:.2em;color:#F5B94A">GOOD AFTERNOON, AANYA</div><h1 style="margin:12px 0 0;font:600 44px/1 'Space Grotesk',sans-serif;letter-spacing:-.04em">Your reading <em style="font-family:'Instrument Serif',serif;font-weight:400;color:#F5B94A">universe</em>, today.</h1></div>
+<div style="display:flex;align-items:center;gap:8px;font:500 12px 'JetBrains Mono',monospace;color:#A09EB0"><span class="pulse" style="width:8px;height:8px;border-radius:50%;background:#F5B94A"></span>{{newCount}} new since you left</div>
+</div>
+<div role="tablist" aria-label="Feed filters" style="display:flex;flex-wrap:wrap;gap:8px;margin-top:28px">
+<for-each list="{{filters}}" as="f"><button type="button" role="tab" onClick="{{f.pick}}" style="height:44px;padding:0 18px;border-radius:999px;font-size:14px;font-weight:500;cursor:pointer;{{f.style}}">{{f.label}}</button></for-each>
+</div>
+
+<div style="margin-top:20px;padding:18px;border-radius:22px;border:1px solid rgba(255,255,255,.1);background:#0C0C14;display:flex;flex-wrap:wrap;gap:12px;align-items:center">
+<span style="width:44px;height:44px;border-radius:50%;display:grid;place-items:center;font:600 14px Inter;background:#9D8CFF;color:#0E0A22">AR</span>
+<label style="flex:1 1 260px;min-width:0"><span style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Share something</span><input type="text" value="{{draft}}" onChange="{{onDraft}}" placeholder="Share a line you loved, a review, or what you're reading…" style="width:100%;height:48px;padding:0 16px;border-radius:14px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.03);color:#F2F0EA;font-size:15px;outline:none"></label>
+<button type="button" style="height:48px;padding:0 16px;border-radius:14px;border:1px solid rgba(157,140,255,.35);background:rgba(157,140,255,.1);color:#C9BFFF;font-size:14px;font-weight:500;cursor:pointer" onClick="{{assist}}">{{assistLabel}}</button>
+<button type="button" style="height:48px;padding:0 20px;border-radius:14px;border:0;background:#F5B94A;color:#120D04;font-weight:600;font-size:14px;cursor:pointer" onClick="{{postIt}}">Post</button>
+</div>
+
+<div style="display:flex;flex-direction:column;gap:16px;margin-top:20px">
+<for-each list="{{posts}}" as="p">
+<article class="post rise" style="padding:26px;border-radius:24px;border:1px solid {{p.border}};background:{{p.bg}};animation-delay:{{p.delay}}">
+<div style="display:flex;align-items:center;gap:12px">
+<a href="#/author" style="width:44px;height:44px;border-radius:50%;display:grid;place-items:center;font:600 14px Inter;background:{{p.color}};color:#0A0A10;flex:0 0 auto">{{p.initials}}</a>
+<div style="flex:1;min-width:0"><div style="font-weight:600;font-size:15px">{{p.name}} <span style="font-weight:400;color:#8A889C">{{p.action}}</span></div><div style="font:500 11px 'JetBrains Mono',monospace;letter-spacing:.06em;color:#8A889C;margin-top:3px">{{p.meta}}</div></div>
+<span style="padding:6px 10px;border-radius:999px;font:500 10px 'JetBrains Mono',monospace;letter-spacing:.1em;background:rgba(255,255,255,.06);color:{{p.kindColor}}">{{p.kind}}</span>
+</div>
+<div style="display:flex;gap:24px;align-items:center;margin-top:18px">
+<show-if value="{{p.hasBook}}">
+<a href="#/book" class="bk" aria-label="{{p.book.title}}" style="--w:92px;--h:138px;--t:16px;margin-left:6px"><div class="bk-in"><div class="bk-fr" style="background:{{p.book.bg}};color:{{p.book.ink}}"><div style="position:absolute;background:{{p.book.accent}};{{p.book.shape}}"></div><div style="position:absolute;inset:0;padding:14px 10px 10px 14px;font-family:'Instrument Serif',serif;font-size:14px;line-height:1">{{p.book.title}}</div><div class="gl"></div></div><div class="bk-sp" style="background:{{p.book.spine}}"></div></div></a>
+</show-if>
+<div style="flex:1;min-width:0">
+<p style="margin:0;font-size:{{p.size}};line-height:1.4;font-family:{{p.font}};color:#F2F0EA">{{p.text}}</p>
+<show-if value="{{p.hasProgress}}"><div style="margin-top:14px;height:6px;border-radius:6px;background:rgba(255,255,255,.08)"><div style="height:100%;border-radius:6px;background:#6FD6C4;width:{{p.progress}}%"></div></div><div style="margin-top:8px;font:500 12px 'JetBrains Mono',monospace;color:#6FD6C4">{{p.progress}}% · {{p.progressNote}}</div></show-if>
+</div>
+</div>
+<show-if value="{{p.isAi}}">
+<div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:18px"><a href="#/explore" style="height:42px;padding:0 16px;display:inline-flex;align-items:center;border-radius:999px;background:#9D8CFF;color:#0E0A22;font-weight:600;font-size:13px">Show me the shelf</a><button type="button" onClick="{{p.dismiss}}" style="height:42px;padding:0 16px;border-radius:999px;background:transparent;border:1px solid rgba(255,255,255,.18);color:#D6D4E0;font-size:13px;cursor:pointer">Less like this</button></div>
+</show-if>
+<div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:18px;padding-top:16px;border-top:1px solid rgba(255,255,255,.06)">
+<button type="button" onClick="{{p.like}}" style="height:40px;padding:0 14px;border-radius:999px;font-size:13px;cursor:pointer;{{p.likeStyle}}">♥ {{p.likes}}</button>
+<a href="#/community" style="height:40px;padding:0 14px;border-radius:999px;border:1px solid rgba(255,255,255,.12);display:inline-flex;align-items:center;font-size:13px;color:#A09EB0">{{p.replies}} replies</a>
+<button type="button" onClick="{{p.save}}" style="height:40px;padding:0 14px;border-radius:999px;font-size:13px;cursor:pointer;{{p.saveStyle}}">{{p.saveLabel}}</button>
+</div>
+</article>
+</for-each>
+</div>
+</div>
+
+<aside style="flex:1 1 300px;min-width:0;display:flex;flex-direction:column;gap:16px">
+<div style="padding:26px;border-radius:24px;border:1px solid rgba(255,255,255,.1);background:linear-gradient(160deg,#141224,#0C0C14)">
+<div style="font:500 11px 'JetBrains Mono',monospace;letter-spacing:.16em;color:#8A889C">READING STREAK</div>
+<div style="display:flex;align-items:baseline;gap:8px;margin-top:10px"><span style="font:600 52px/1 'Space Grotesk';color:#F5B94A">23</span><span style="color:#A09EB0">days</span></div>
+<div style="display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px;margin-top:16px">
+<for-each list="{{week}}" as="d"><div style="text-align:center"><div style="height:36px;border-radius:10px;{{d.style}}"></div><div style="font:500 10px 'JetBrains Mono',monospace;color:#8A889C;margin-top:6px">{{d.l}}</div></div></for-each>
+</div>
+<div style="margin-top:14px;font-size:13px;color:#A09EB0">Read 12 more minutes today to unlock <span style="color:#F2F0EA">Night Owl II</span>.</div>
+</div>
+<a href="#/leaderboard" style="display:block;padding:26px;border-radius:24px;border:1px solid rgba(111,214,196,.3);background:rgba(111,214,196,.05)">
+<div style="font:500 11px 'JetBrains Mono',monospace;letter-spacing:.16em;color:#6FD6C4">#12BOOKSAWAY · WEEK 3</div>
+<div style="display:flex;justify-content:space-between;align-items:baseline;margin-top:10px"><span style="font:600 28px 'Space Grotesk'">4 / 12</span><span style="font-size:13px;color:#A09EB0">rank #318 of 3,402</span></div>
+<div style="height:6px;margin-top:12px;border-radius:6px;background:rgba(255,255,255,.08)"><div style="height:100%;width:33%;border-radius:6px;background:#6FD6C4"></div></div>
+</a>
+<div style="padding:26px;border-radius:24px;border:1px solid rgba(255,255,255,.08);background:#0C0C14">
+<div style="font:500 11px 'JetBrains Mono',monospace;letter-spacing:.16em;color:#8A889C">AUTHORS TO FOLLOW</div>
+<div style="display:flex;flex-direction:column;gap:14px;margin-top:16px">
+<for-each list="{{suggest}}" as="a">
+<div style="display:flex;align-items:center;gap:12px"><a href="#/author" style="width:40px;height:40px;border-radius:50%;display:grid;place-items:center;font:600 13px Inter;background:{{a.color}};color:#0A0A10">{{a.initials}}</a><div style="flex:1;min-width:0"><div style="font-weight:600;font-size:14px">{{a.name}}</div><div style="font-size:12px;color:#8A889C">{{a.why}}</div></div><button type="button" onClick="{{a.pick}}" style="height:36px;padding:0 14px;border-radius:999px;font-size:13px;font-weight:600;cursor:pointer;{{a.style}}">{{a.label}}</button></div>
+</for-each>
+</div>
+</div>
+</aside>
+</section>
+</div>

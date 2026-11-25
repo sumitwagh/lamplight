@@ -1,0 +1,7 @@
+body{margin:0;background:#06060B}*{box-sizing:border-box}a{color:inherit;text-decoration:none}button{font-family:inherit}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}.fl{animation:float 5s ease-in-out infinite}
+@keyframes grow{from{transform:scaleY(.2);opacity:0}to{transform:none;opacity:1}}.grow{animation:grow 1s cubic-bezier(.16,1,.3,1) both;transform-origin:bottom}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}.rise{animation:rise .6s cubic-bezier(.16,1,.3,1) both}
+.pil{position:relative;transform-style:preserve-3d}.pil-top{position:absolute;left:0;top:0;width:100%;height:90px;transform-origin:top;transform:rotateX(90deg)}
+.lr{transition:background .3s,transform .4s cubic-bezier(.16,1,.3,1)}.lr:hover{background:rgba(255,255,255,.035);transform:translateX(6px)}
+@media (prefers-reduced-motion: reduce){*{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}

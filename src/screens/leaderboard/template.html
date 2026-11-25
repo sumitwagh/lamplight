@@ -1,0 +1,87 @@
+<div style="min-height:100vh;background:#06060B;color:#F2F0EA;font-family:Inter,system-ui,sans-serif;overflow-x:hidden">
+<!--nav-->
+
+<section style="position:relative;padding:44px 48px 0;background:radial-gradient(800px 420px at 50% 75%,rgba(245,185,74,.16),transparent 70%)">
+<div style="max-width:1340px;margin:0 auto">
+<div style="display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:20px">
+<div><div style="font:500 12px 'JetBrains Mono',monospace;letter-spacing:.2em;color:#F5B94A">LEADERBOARD · {{periodUpper}}</div>
+<h1 style="margin:12px 0 0;font:600 clamp(40px,4.6vw,64px)/1 'Space Grotesk',sans-serif;letter-spacing:-.045em">The people who make <em style="font-family:'Instrument Serif',serif;font-weight:400;color:#F5B94A">Folio</em> glow.</h1></div>
+<div style="display:flex;gap:4px;padding:4px;border-radius:14px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08)" role="group" aria-label="Period">
+<for-each list="{{periods}}" as="p"><button type="button" onClick="{{p.pick}}" style="height:44px;padding:0 18px;border-radius:10px;border:0;font-size:14px;font-weight:500;cursor:pointer;{{p.style}}">{{p.label}}</button></for-each>
+</div>
+</div>
+<div role="tablist" aria-label="Leaderboard category" style="display:flex;flex-wrap:wrap;gap:8px;margin-top:28px">
+<for-each list="{{cats}}" as="c"><button type="button" role="tab" onClick="{{c.pick}}" style="height:44px;padding:0 20px;border-radius:999px;font-size:14px;font-weight:500;cursor:pointer;{{c.style}}">{{c.label}}</button></for-each>
+</div>
+
+<div style="display:flex;justify-content:center;align-items:flex-end;gap:18px;height:470px;margin-top:8px;perspective:1400px">
+<div style="display:flex;align-items:flex-end;gap:18px;transform-style:preserve-3d;transform:rotateX(-14deg)">
+<for-each list="{{podium}}" as="p">
+<div style="display:flex;flex-direction:column;align-items:center;width:200px;transform-style:preserve-3d">
+<a href="{{p.href}}" class="fl" style="display:flex;flex-direction:column;align-items:center;margin-bottom:26px;animation-delay:{{p.delay}}">
+<span style="width:{{p.av}}px;height:{{p.av}}px;border-radius:50%;display:grid;place-items:center;font:600 22px 'Space Grotesk';background:{{p.color}};color:#0A0A10;box-shadow:0 0 0 4px #06060B,0 0 0 5px {{p.ring}},0 20px 40px -10px {{p.ring}}">{{p.initials}}</span>
+<span style="margin-top:14px;font-weight:600;font-size:16px;text-align:center">{{p.name}}</span>
+<span style="margin-top:4px;font:500 12px 'JetBrains Mono',monospace;color:#A09EB0">{{p.stat}}</span>
+</a>
+<div class="pil grow" style="width:200px;height:{{p.h}}px;animation-delay:{{p.delay}}">
+<div class="pil-top" style="background:{{p.top}}"></div>
+<div style="position:absolute;inset:0;transform:translateZ(90px);background:{{p.face}};border-top:1px solid rgba(255,255,255,.3);display:flex;justify-content:center;padding-top:18px"><span style="font:700 64px/1 'Space Grotesk';letter-spacing:-.05em;color:{{p.num}}">{{p.rank}}</span></div>
+</div>
+</div>
+</for-each>
+</div>
+</div>
+</div>
+</section>
+
+<section style="max-width:1340px;margin:0 auto;padding:56px 48px 0;display:flex;flex-wrap:wrap;gap:24px;align-items:flex-start">
+<div style="flex:999 1 600px;min-width:0;border-radius:24px;border:1px solid rgba(255,255,255,.08);background:#0C0C14;overflow:hidden">
+<div style="display:flex;justify-content:space-between;gap:12px;padding:20px 28px;font:500 11px 'JetBrains Mono',monospace;letter-spacing:.12em;color:#8A889C;border-bottom:1px solid rgba(255,255,255,.06)"><span>RANK · {{catUpper}}</span><span>{{metric}}</span></div>
+<for-each list="{{rows}}" as="r">
+<a href="{{r.href}}" class="lr rise" style="display:flex;align-items:center;gap:16px;padding:16px 28px;border-bottom:1px solid rgba(255,255,255,.05);animation-delay:{{r.delay}};{{r.style}}">
+<span style="width:28px;font:600 15px 'JetBrains Mono',monospace;color:#8A889C">{{r.rank}}</span>
+<span style="width:44px;height:44px;border-radius:50%;display:grid;place-items:center;font:600 14px Inter;background:{{r.color}};color:#0A0A10">{{r.initials}}</span>
+<div style="flex:1;min-width:0"><div style="font-weight:600;font-size:15px">{{r.name}}</div><div style="font-size:13px;color:#8A889C;margin-top:2px">{{r.meta}}</div></div>
+<span style="font:500 12px 'JetBrains Mono',monospace;color:{{r.moveColor}}">{{r.move}}</span>
+<span style="width:84px;text-align:right;font:600 22px 'Space Grotesk'">{{r.score}}</span>
+</a>
+</for-each>
+</div>
+
+<aside style="flex:1 1 320px;min-width:0;display:flex;flex-direction:column;gap:16px">
+<div style="padding:26px;border-radius:24px;border:1px solid rgba(157,140,255,.3);background:linear-gradient(160deg,rgba(157,140,255,.12),rgba(157,140,255,.02))">
+<div style="font:500 11px 'JetBrains Mono',monospace;letter-spacing:.16em;color:#C9BFFF">HOW INFLUENCE IS SCORED</div>
+<div style="display:flex;flex-direction:column;gap:10px;margin-top:14px;font-size:14px;color:#D6D4E0">
+<div style="display:flex;justify-content:space-between"><span>Reader engagement</span><span style="font-family:'JetBrains Mono',monospace">35%</span></div>
+<div style="display:flex;justify-content:space-between"><span>Feedback sentiment</span><span style="font-family:'JetBrains Mono',monospace">25%</span></div>
+<div style="display:flex;justify-content:space-between"><span>Content quality</span><span style="font-family:'JetBrains Mono',monospace">20%</span></div>
+<div style="display:flex;justify-content:space-between"><span>Community contribution</span><span style="font-family:'JetBrains Mono',monospace">20%</span></div>
+</div>
+<p style="margin:14px 0 0;font-size:13px;line-height:1.55;color:#A09EB0">Follower count alone never moves the score — helping readers does.</p>
+</div>
+<div style="padding:26px;border-radius:24px;border:1px solid rgba(255,255,255,.08);background:#0C0C14">
+<div style="font:500 11px 'JetBrains Mono',monospace;letter-spacing:.16em;color:#8A889C">YOUR BADGES · LEVEL 7 READER</div>
+<div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:16px">
+<for-each list="{{badges}}" as="b">
+<div style="padding:14px 8px;border-radius:16px;text-align:center;{{b.style}}"><div style="font-size:24px;line-height:1;color:{{b.color}}">{{b.icon}}</div><div style="margin-top:8px;font-size:12px;line-height:1.3">{{b.label}}</div></div>
+</for-each>
+</div>
+</div>
+</aside>
+</section>
+
+<section style="max-width:1340px;margin:0 auto;padding:56px 48px 120px">
+<div style="font:500 12px 'JetBrains Mono',monospace;letter-spacing:.2em;color:#F5B94A">READING CHALLENGES</div>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-top:20px">
+<for-each list="{{challenges}}" as="c">
+<div style="padding:26px;border-radius:24px;border:1px solid rgba(255,255,255,.08);background:#0C0C14;display:flex;flex-direction:column;gap:12px">
+<div style="display:flex;justify-content:space-between;font:500 11px 'JetBrains Mono',monospace;letter-spacing:.1em"><span style="color:{{c.color}}">{{c.when}}</span><span style="color:#8A889C">{{c.people}}</span></div>
+<div style="font:600 22px/1.2 'Space Grotesk';letter-spacing:-.02em">{{c.title}}</div>
+<div style="font-size:14px;line-height:1.5;color:#A09EB0">{{c.desc}}</div>
+<div style="height:6px;border-radius:6px;background:rgba(255,255,255,.08)"><div style="height:100%;border-radius:6px;background:{{c.color}};width:{{c.pct}}%"></div></div>
+<button type="button" onClick="{{c.pick}}" style="align-self:flex-start;height:42px;padding:0 18px;border-radius:999px;font-size:14px;font-weight:600;cursor:pointer;{{c.style}}">{{c.label}}</button>
+</div>
+</for-each>
+</div>
+</section>
+</div>

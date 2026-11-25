@@ -1,0 +1,89 @@
+<div style="min-height:100vh;background:#06060B;color:#F2F0EA;font-family:Inter,system-ui,sans-serif;overflow-x:hidden">
+<!--nav-->
+
+<section style="max-width:1340px;margin:0 auto;padding:44px 48px 0">
+<div style="display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:20px">
+<div><div style="font:500 12px 'JetBrains Mono',monospace;letter-spacing:.2em;color:#F5B94A">AUTHOR DASHBOARD · MIRA OKAFOR</div>
+<h1 style="margin:12px 0 0;font:600 clamp(38px,4.4vw,58px)/1 'Space Grotesk',sans-serif;letter-spacing:-.045em">Your readers had a <em style="font-family:'Instrument Serif',serif;font-weight:400;color:#F5B94A">big</em> week.</h1></div>
+<div style="display:flex;flex-wrap:wrap;gap:10px">
+<div role="group" aria-label="Date range" style="display:flex;gap:4px;padding:4px;border-radius:14px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08)">
+<for-each list="{{ranges}}" as="r"><button type="button" onClick="{{r.pick}}" style="height:44px;padding:0 16px;border-radius:10px;border:0;font-size:14px;font-weight:500;cursor:pointer;{{r.style}}">{{r.label}}</button></for-each>
+</div>
+<a href="#/studio" style="height:52px;padding:0 22px;border-radius:999px;background:#F5B94A;color:#120D04;font-weight:600;display:inline-flex;align-items:center;gap:8px">✶ Open AI Studio</a>
+</div>
+</div>
+
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:36px;perspective:1200px">
+<for-each list="{{kpis}}" as="k">
+<div class="tile" style="padding:24px;border-radius:22px;border:1px solid rgba(255,255,255,.08);background:#0C0C14">
+<div style="font:500 11px 'JetBrains Mono',monospace;letter-spacing:.14em;color:#8A889C">{{k.label}}</div>
+<div style="display:flex;align-items:baseline;gap:10px;margin-top:12px"><span style="font:600 40px/1 'Space Grotesk';letter-spacing:-.03em">{{k.value}}</span><span style="font:500 13px 'JetBrains Mono',monospace;color:#6FD6C4">▲ {{k.delta}}</span></div>
+<div style="margin-top:10px;font-size:13px;color:#A09EB0">{{k.note}}</div>
+</div>
+</for-each>
+</div>
+</section>
+
+<section style="max-width:1340px;margin:0 auto;padding:16px 48px 0;display:flex;flex-wrap:wrap;gap:16px">
+<div style="flex:2 1 600px;min-width:0;padding:28px;border-radius:24px;border:1px solid rgba(255,255,255,.08);background:#0C0C14">
+<div style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px"><div><div style="font:600 20px 'Space Grotesk'">Reads across all books</div><div style="font-size:13px;color:#8A889C;margin-top:4px">{{chartNote}}</div></div>
+<div style="display:flex;gap:16px;font-size:13px;color:#A09EB0;align-items:center"><span style="display:flex;align-items:center;gap:6px"><span style="width:14px;height:3px;background:#F5B94A"></span>Reads</span><span style="display:flex;align-items:center;gap:6px"><span style="width:14px;height:0;border-top:2px dashed #9D8CFF"></span>Story views</span></div></div>
+<svg viewBox="0 0 800 260" role="img" aria-label="{{chartLabel}}" style="width:100%;height:auto;margin-top:20px;overflow:visible">
+<line x1="0" y1="60" x2="800" y2="60" stroke="rgba(255,255,255,.06)"/><line x1="0" y1="120" x2="800" y2="120" stroke="rgba(255,255,255,.06)"/><line x1="0" y1="180" x2="800" y2="180" stroke="rgba(255,255,255,.06)"/><line x1="0" y1="240" x2="800" y2="240" stroke="rgba(255,255,255,.14)"/>
+<path data-d="{{area}}" fill="rgba(245,185,74,.10)"/>
+<polyline class="draw" points="{{line}}" fill="none" stroke="#F5B94A" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="{{line2}}" fill="none" stroke="#9D8CFF" stroke-width="2" stroke-dasharray="6 6"/>
+<circle cx="{{peakX}}" cy="{{peakY}}" r="6" fill="#06060B" stroke="#F5B94A" stroke-width="3"/>
+<text x="{{peakX}}" y="{{peakTextY}}" text-anchor="middle" fill="#F2F0EA" font-family="Inter" font-size="13" font-weight="600">{{peakLabel}}</text>
+</svg>
+<div style="display:flex;justify-content:space-between;margin-top:8px;font:500 11px 'JetBrains Mono',monospace;color:#8A889C"><span>{{xStart}}</span><span>{{xEnd}}</span></div>
+</div>
+<div style="flex:1 1 320px;min-width:0;padding:28px;border-radius:24px;border:1px solid rgba(255,255,255,.08);background:#0C0C14">
+<div style="font:600 20px 'Space Grotesk'">Where your readers are</div>
+<div style="display:flex;flex-direction:column;gap:16px;margin-top:22px">
+<for-each list="{{regions}}" as="g"><div><div style="display:flex;justify-content:space-between;font-size:14px"><span>{{g.name}}</span><span style="font-family:'JetBrains Mono',monospace;color:#A09EB0">{{g.v}}%</span></div><div style="height:6px;margin-top:6px;border-radius:6px;background:rgba(255,255,255,.06)"><div style="height:100%;border-radius:6px;background:#9D8CFF;width:{{g.w}}%"></div></div></div></for-each>
+</div>
+<div style="margin-top:22px;padding-top:18px;border-top:1px solid rgba(255,255,255,.08);font-size:13px;line-height:1.55;color:#A09EB0">Readers in <span style="color:#F2F0EA">India</span> grew fastest after the #MonsoonFiction crossover thread.</div>
+</div>
+</section>
+
+<section style="max-width:1340px;margin:0 auto;padding:16px 48px 0">
+<div style="padding:32px;border-radius:24px;border:1px solid rgba(157,140,255,.28);background:linear-gradient(160deg,rgba(157,140,255,.10),rgba(157,140,255,.02) 60%)">
+<div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:12px"><div><div style="font:500 12px 'JetBrains Mono',monospace;letter-spacing:.2em;color:#C9BFFF">✶ COMMUNITY → CONTENT</div><div style="margin-top:10px;font:600 26px 'Space Grotesk';letter-spacing:-.02em">3 ideas your readers are asking for</div></div><span style="font-size:13px;color:#A09EB0">Detected from 1,840 comments this week</span></div>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin-top:22px">
+<for-each list="{{ideas}}" as="i">
+<div style="padding:22px;border-radius:18px;background:rgba(6,6,11,.6);border:1px solid rgba(255,255,255,.08);display:flex;flex-direction:column;gap:12px">
+<div style="display:flex;justify-content:space-between;font:500 11px 'JetBrains Mono',monospace;letter-spacing:.1em"><span style="color:{{i.color}}">{{i.type}}</span><span style="color:#8A889C">{{i.signal}}</span></div>
+<div style="font-weight:600;font-size:17px;line-height:1.35">{{i.title}}</div>
+<div style="font-size:13px;line-height:1.5;color:#A09EB0">{{i.why}}</div>
+<a href="#/studio" style="margin-top:auto;align-self:flex-start;height:40px;padding:0 16px;border-radius:999px;background:#F2F0EA;color:#0A0A10;font-weight:600;font-size:13px;display:inline-flex;align-items:center">Draft in Studio →</a>
+</div>
+</for-each>
+</div>
+</div>
+</section>
+
+<section style="max-width:1340px;margin:0 auto;padding:16px 48px 120px">
+<div style="border-radius:24px;border:1px solid rgba(255,255,255,.08);background:#0C0C14;overflow:hidden">
+<div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px;padding:24px 28px"><div style="font:600 20px 'Space Grotesk'">Your books</div><button type="button" onClick="{{toggleAdd}}" aria-expanded="{{addExp}}" style="height:44px;padding:0 18px;border-radius:999px;border:1px solid rgba(255,255,255,.18);background:transparent;color:#F2F0EA;font-size:14px;cursor:pointer">{{addLabel}}</button></div>
+<show-if value="{{adding}}"><div style="display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end;padding:0 28px 20px"><label style="flex:1 1 260px;font:500 11px 'JetBrains Mono',monospace;letter-spacing:.12em;color:#8A889C">WORKING TITLE<input type="text" value="{{newTitle}}" onChange="{{onNewTitle}}" placeholder="e.g. The Lantern Census, Book II" style="display:block;width:100%;height:46px;margin-top:8px;padding:0 16px;border-radius:14px;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.04);color:#F2F0EA;font:400 15px Inter,sans-serif"></label><button type="button" onClick="{{addBook}}" style="height:46px;padding:0 20px;border-radius:999px;border:0;background:#F5B94A;color:#120D04;font-weight:600;cursor:pointer">Create draft</button><p aria-live="polite" style="flex-basis:100%;margin:0;font-size:13px;color:#FF8A6B">{{addError}}</p></div></show-if>
+<div style="overflow-x:auto">
+<div role="table" style="display:table;width:100%;min-width:760px;border-collapse:collapse;font-size:14px">
+<div role="rowgroup" style="display:table-header-group"><div role="row" style="display:table-row;text-align:left;font:500 11px 'JetBrains Mono',monospace;letter-spacing:.12em;color:#8A889C"><div role="columnheader" style="display:table-cell;padding:12px 28px;font-weight:500">TITLE</div><div role="columnheader" style="display:table-cell;padding:12px;font-weight:500">STATUS</div><div role="columnheader" style="display:table-cell;padding:12px;font-weight:500">READS · 30D</div><div role="columnheader" style="display:table-cell;padding:12px;font-weight:500">RATING</div><div role="columnheader" style="display:table-cell;padding:12px;font-weight:500">DISCUSSIONS</div><div role="columnheader" style="display:table-cell;padding:12px 28px;font-weight:500;text-align:right">ACTION</div></div></div>
+<div role="rowgroup" style="display:table-row-group">
+<for-each list="{{books}}" as="b">
+<div role="row" class="row" style="display:table-row;border-top:1px solid rgba(255,255,255,.06)">
+<div role="cell" style="display:table-cell;padding:16px 28px"><div style="display:flex;align-items:center;gap:14px"><span style="width:34px;height:50px;border-radius:2px 4px 4px 2px;background:{{b.bg}};box-shadow:inset 3px 0 0 rgba(0,0,0,.25),0 8px 16px -6px #000"></span><span style="font-weight:600">{{b.title}}</span></div></div>
+<div role="cell" style="display:table-cell;padding:16px 12px"><span style="padding:6px 10px;border-radius:999px;font:500 11px 'JetBrains Mono',monospace;{{b.statusStyle}}">{{b.status}}</span></div>
+<div role="cell" style="display:table-cell;padding:16px 12px;font-family:'JetBrains Mono',monospace">{{b.reads}}</div>
+<div role="cell" style="display:table-cell;padding:16px 12px;color:#F5B94A">{{b.rating}}</div>
+<div role="cell" style="display:table-cell;padding:16px 12px">{{b.disc}}</div>
+<div role="cell" style="display:table-cell;padding:16px 28px;text-align:right"><a href="{{b.href}}" style="color:#F5B94A;font-weight:500">{{b.action}} →</a></div>
+</div>
+</for-each>
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>

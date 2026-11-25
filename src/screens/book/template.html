@@ -1,0 +1,125 @@
+<div style="min-height:100vh;background:#06060B;color:#F2F0EA;font-family:Inter,system-ui,sans-serif;overflow-x:hidden">
+<!--nav-->
+
+<section onMouseMove="{{onMove}}" onMouseLeave="{{onLeave}}" style="position:relative;padding:40px 48px 88px;background:radial-gradient(800px 600px at 28% 55%,rgba(18,59,58,.9),transparent 70%),radial-gradient(600px 400px at 30% 60%,rgba(245,185,74,.14),transparent 70%)">
+<div style="max-width:1340px;margin:0 auto">
+<nav aria-label="Breadcrumb" style="font:500 12px 'JetBrains Mono',monospace;letter-spacing:.12em;color:#8A889C"><a href="#/explore" style="color:#A09EB0">EXPLORE</a> / LITERARY SCI-FI / <span style="color:#F2F0EA">THE CARTOGRAPHER OF SILENCE</span></nav>
+<div style="display:flex;flex-wrap:wrap;align-items:center;gap:56px;margin-top:24px">
+<div style="flex:1 1 480px;min-width:0;height:620px;display:flex;flex-direction:column;align-items:center;justify-content:center;perspective:1800px">
+<div class="fl">
+<div style="position:relative;width:300px;height:450px;transform-style:preserve-3d;transition:transform .6s cubic-bezier(.16,1,.3,1);transform:rotateX({{rx}}deg) rotateY({{ry}}deg) translateX({{shift}}px)">
+<div style="position:absolute;inset:0;transform:translateZ(-22px);background:#0B2726;border-radius:2px 6px 6px 2px;box-shadow:0 60px 100px -30px #000"></div>
+<div style="position:absolute;left:0;top:0;width:44px;height:100%;transform-origin:left;transform:translateZ(22px) rotateY(90deg);background:#0B2726"></div>
+<div style="position:absolute;right:0;top:1.5%;width:44px;height:97%;transform-origin:right;transform:translateZ(20px) rotateY(-90deg);background:repeating-linear-gradient(90deg,#f1e9da 0 1px,#cfc5b2 1px 2px)"></div>
+<div style="position:absolute;inset:1.5% 1% 1.5% 0;transform:translateZ(20px);background:#F4EDE0;color:#2A2620;border-radius:0 4px 4px 0;padding:44px 34px;display:flex;flex-direction:column;gap:18px;box-shadow:inset 18px 0 30px -18px rgba(0,0,0,.35)">
+<div style="font:500 10px 'JetBrains Mono',monospace;letter-spacing:.2em;color:#8A6A2A">CHAPTER ONE · VELL</div>
+<p style="margin:0;font-family:'Instrument Serif',serif;font-size:21px;line-height:1.38">In the city of Vell, silence was sold by the gram. My mother bought it for funerals. I stole it for maps.</p>
+<p style="margin:0;font-family:'Instrument Serif',serif;font-size:17px;line-height:1.45;color:#5A5348">The first street I charted had no name, only a hush that followed you home and sat at the foot of your bed.</p>
+<div style="margin-top:auto;font:500 10px 'JetBrains Mono',monospace;color:#8A6A2A">p. 1 — 412 readers highlighted this</div>
+</div>
+<div class="lid" style="transform:translateZ(22px) rotateY({{lid}}deg)">
+<div style="position:absolute;inset:0;background:#123B3A;color:#F4EBD7;border-radius:2px 6px 6px 2px;overflow:hidden;backface-visibility:hidden">
+<div style="position:absolute;width:80%;height:54%;border-radius:50%;top:-10%;right:-24%;background:#F5B94A"></div>
+<div style="position:absolute;width:140%;height:1px;left:-20%;top:62%;background:rgba(244,235,215,.35);transform:rotate(-8deg)"></div>
+<div style="position:absolute;width:140%;height:1px;left:-20%;top:70%;background:rgba(244,235,215,.2);transform:rotate(-8deg)"></div>
+<div class="bk-tx" style="padding:44px 30px 30px 40px"><div style="font:500 11px 'JetBrains Mono',monospace;letter-spacing:.2em">LITERARY SCI-FI</div><div style="font-family:'Instrument Serif',serif;font-size:50px;line-height:.92">The Cartographer of Silence</div><div style="font:500 12px Inter;letter-spacing:.12em">MIRA OKAFOR</div></div>
+<div class="gl"></div>
+</div>
+<div style="position:absolute;inset:0;background:#0E302F;border-radius:6px 2px 2px 6px;transform:rotateY(180deg);backface-visibility:hidden;display:grid;place-items:center;font-family:'Instrument Serif',serif;font-style:italic;font-size:20px;color:rgba(244,235,215,.6)">for the ones who listen</div>
+</div>
+</div>
+</div>
+<div style="display:flex;gap:10px;margin-top:56px">
+<button type="button" onClick="{{toggleOpen}}" style="height:48px;padding:0 22px;border-radius:999px;border:1px solid rgba(255,255,255,.2);background:rgba(20,20,32,.7);backdrop-filter:blur(10px);color:#F2F0EA;font-size:14px;font-weight:500;cursor:pointer;display:flex;align-items:center;gap:8px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 5h7a2 2 0 012 2v12a2 2 0 00-2-2H3zM21 5h-7a2 2 0 00-2 2v12a2 2 0 012-2h7z"/></svg>{{openLabel}}</button>
+<span style="height:48px;padding:0 18px;border-radius:999px;display:flex;align-items:center;font:500 12px 'JetBrains Mono',monospace;color:#8A889C;border:1px dashed rgba(255,255,255,.14)">Move your cursor to turn it</span>
+</div>
+</div>
+
+<div style="flex:1 1 480px;min-width:0">
+<div style="display:flex;flex-wrap:wrap;gap:8px"><span style="padding:6px 12px;border-radius:999px;background:rgba(245,185,74,.14);color:#F5B94A;font:500 12px 'JetBrains Mono',monospace">#2 TRENDING</span><span style="padding:6px 12px;border-radius:999px;background:rgba(255,255,255,.06);color:#D6D4E0;font:500 12px 'JetBrains Mono',monospace">EDITOR'S PICK</span></div>
+<h1 style="margin:20px 0 0;font:600 clamp(46px,5vw,72px)/.95 'Space Grotesk',sans-serif;letter-spacing:-.045em">The Cartographer of <em style="font-family:'Instrument Serif',serif;font-weight:400;color:#F5B94A">Silence</em></h1>
+<a href="#/author" style="display:inline-flex;align-items:center;gap:12px;margin-top:24px"><span style="width:40px;height:40px;border-radius:50%;background:#F5B94A;color:#1A1205;display:grid;place-items:center;font:600 13px Inter">MO</span><span><span style="display:block;font-weight:600">Mira Okafor</span><span style="font-size:13px;color:#8A889C">48.2k followers · Influence 94</span></span></a>
+<p style="margin:28px 0 0;max-width:560px;font-size:17px;line-height:1.65;color:#A09EB0">A mapmaker charts a city where sound is rationed — and discovers the one street that was never meant to be quiet. A novel about grief, cities, and the maps we make to survive them.</p>
+<div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:32px;max-width:580px">
+<div style="padding:16px;border-radius:16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08)"><div style="font:600 24px 'Space Grotesk'">★ 4.8</div><div style="font-size:12px;color:#8A889C;margin-top:4px">9,412 ratings</div></div>
+<div style="padding:16px;border-radius:16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08)"><div style="font:600 24px 'Space Grotesk'">384</div><div style="font-size:12px;color:#8A889C;margin-top:4px">pages</div></div>
+<div style="padding:16px;border-radius:16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08)"><div style="font:600 24px 'Space Grotesk'">18.2k</div><div style="font-size:12px;color:#8A889C;margin-top:4px">reading now</div></div>
+<div style="padding:16px;border-radius:16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08)"><div style="font:600 24px 'Space Grotesk'">412</div><div style="font-size:12px;color:#8A889C;margin-top:4px">discussions</div></div>
+</div>
+<div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:32px">
+<button type="button" onClick="{{toggleOpen}}" style="height:56px;padding:0 28px;border-radius:999px;border:0;background:#F5B94A;color:#120D04;font-weight:600;font-size:16px;cursor:pointer">Read chapter one</button>
+<button type="button" onClick="{{toggleShelf}}" style="height:56px;padding:0 24px;border-radius:999px;border:1px solid rgba(255,255,255,.2);background:transparent;color:#F2F0EA;font-size:15px;font-weight:500;cursor:pointer">{{shelfLabel}}</button>
+<a href="#/community" style="height:56px;padding:0 24px;border-radius:999px;border:1px solid rgba(255,255,255,.2);display:inline-flex;align-items:center;font-size:15px;font-weight:500">Join the discussion</a>
+</div>
+<div style="display:flex;align-items:center;gap:12px;margin-top:28px;font-size:13px;color:#A09EB0"><div style="display:flex"><span style="width:28px;height:28px;border-radius:50%;background:#9D8CFF;border:2px solid #06060B"></span><span style="width:28px;height:28px;border-radius:50%;background:#6FD6C4;border:2px solid #06060B;margin-left:-8px"></span><span style="width:28px;height:28px;border-radius:50%;background:#E9E1D3;border:2px solid #06060B;margin-left:-8px"></span></div>Kabir, Leila and 6 people you follow are reading this</div>
+</div>
+</div>
+</div>
+</section>
+
+<section style="max-width:1340px;margin:0 auto;padding:0 48px">
+<div style="padding:40px;border-radius:28px;border:1px solid rgba(157,140,255,.25);background:linear-gradient(150deg,rgba(157,140,255,.10),rgba(157,140,255,.02) 60%);display:flex;flex-wrap:wrap;gap:40px">
+<div style="flex:1 1 300px;min-width:0">
+<div style="display:flex;align-items:center;gap:10px;font:500 12px 'JetBrains Mono',monospace;letter-spacing:.2em;color:#C9BFFF"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C9BFFF" stroke-width="1.8" aria-hidden="true"><path d="M12 3l1.8 4.9L19 9.7l-4.2 3.2 1.4 5.1L12 15.2 7.8 18l1.4-5.1L5 9.7l5.2-1.8z"/></svg>AI SUMMARY</div>
+<h2 style="margin:14px 0 0;font:600 30px/1.1 'Space Grotesk',sans-serif;letter-spacing:-.03em">How much do you want to know?</h2>
+<div role="group" aria-label="Spoiler level" style="display:flex;flex-wrap:wrap;gap:8px;margin-top:22px">
+<for-each list="{{levels}}" as="l">
+<button type="button" onClick="{{l.pick}}" style="height:44px;padding:0 16px;border-radius:12px;font-size:14px;font-weight:500;cursor:pointer;{{l.style}}">{{l.label}}</button>
+</for-each>
+</div>
+</div>
+<div style="flex:2 1 520px;min-width:0">
+<p style="margin:0;font-family:'Instrument Serif',serif;font-size:25px;line-height:1.4;color:#F2F0EA">{{summary}}</p>
+<div style="margin-top:18px;font:500 12px 'JetBrains Mono',monospace;color:#8A889C">Generated from the book and 412 community discussions · updated 2h ago</div>
+</div>
+</div>
+</section>
+
+<section style="max-width:1340px;margin:0 auto;padding:96px 48px 0;display:flex;flex-wrap:wrap;gap:32px">
+<div style="flex:2 1 560px;min-width:0">
+<div role="tablist" aria-label="Book sections" style="display:flex;gap:4px;padding:4px;border-radius:14px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);width:max-content;max-width:100%">
+<for-each list="{{tabs}}" as="t">
+<button type="button" role="tab" onClick="{{t.pick}}" style="height:44px;padding:0 20px;border-radius:10px;border:0;font-size:14px;font-weight:500;cursor:pointer;{{t.style}}">{{t.label}}</button>
+</for-each>
+</div>
+<show-if value="{{showReviews}}">
+<div style="display:flex;flex-direction:column;gap:14px;margin-top:24px">
+<for-each list="{{reviews}}" as="r">
+<article style="padding:26px;border-radius:22px;border:1px solid rgba(255,255,255,.08);background:#0C0C14">
+<div style="display:flex;align-items:center;gap:12px"><span style="width:40px;height:40px;border-radius:50%;display:grid;place-items:center;font:600 13px Inter;background:{{r.color}};color:#0A0A10">{{r.initials}}</span><div style="flex:1"><div style="font-weight:600">{{r.name}} <span style="font:500 11px 'JetBrains Mono',monospace;color:#F5B94A;margin-left:6px">{{r.badge}}</span></div><div style="font-size:12px;color:#8A889C;margin-top:2px">{{r.meta}}</div></div><div style="color:#F5B94A;font-size:14px">{{r.stars}}</div></div>
+<p style="margin:16px 0 0;font-size:16px;line-height:1.65;color:#D6D4E0">{{r.text}}</p>
+<div style="display:flex;gap:10px;margin-top:16px"><button type="button" onClick="{{r.like}}" style="height:40px;padding:0 14px;border-radius:999px;font-size:13px;cursor:pointer;{{r.likeStyle}}">♥ Helpful · {{r.count}}</button><a href="#/community" style="height:40px;padding:0 14px;border-radius:999px;border:1px solid rgba(255,255,255,.12);display:inline-flex;align-items:center;font-size:13px;color:#A09EB0">{{r.replies}} replies</a></div>
+</article>
+</for-each>
+</div>
+</show-if>
+<show-if value="{{showThreads}}">
+<div style="display:flex;flex-direction:column;gap:12px;margin-top:24px">
+<for-each list="{{threads}}" as="d">
+<a href="#/community" class="card" style="display:flex;align-items:center;gap:20px;padding:22px 24px;border-radius:20px;border:1px solid rgba(255,255,255,.08);background:#0C0C14">
+<div style="flex:1;min-width:0"><div style="font:500 11px 'JetBrains Mono',monospace;letter-spacing:.1em;color:{{d.tagColor}}">{{d.tag}}</div><div style="margin-top:8px;font-weight:600;font-size:17px">{{d.title}}</div><div style="margin-top:6px;font-size:13px;color:#8A889C">{{d.meta}}</div></div>
+<div style="text-align:right"><div style="font:600 22px 'Space Grotesk'">{{d.replies}}</div><div style="font-size:12px;color:#8A889C">replies</div></div>
+</a>
+</for-each>
+</div>
+</show-if>
+</div>
+<aside style="flex:1 1 320px;min-width:0;display:flex;flex-direction:column;gap:16px">
+<a href="#/author" class="card" style="display:block;padding:28px;border-radius:24px;border:1px solid rgba(255,255,255,.08);background:#0C0C14">
+<div style="font:500 11px 'JetBrains Mono',monospace;letter-spacing:.16em;color:#8A889C">ABOUT THE AUTHOR</div>
+<div style="display:flex;align-items:center;gap:14px;margin-top:16px"><span style="width:56px;height:56px;border-radius:50%;background:#F5B94A;color:#1A1205;display:grid;place-items:center;font:600 18px Inter">MO</span><div><div style="font:600 20px 'Space Grotesk'">Mira Okafor</div><div style="font-size:13px;color:#8A889C">Lagos → Lisbon · 3 books</div></div></div>
+<p style="margin:16px 0 0;font-size:14px;line-height:1.6;color:#A09EB0">Former urban planner. Posts a daily "field log" story that often becomes a chapter.</p>
+<div style="display:flex;justify-content:space-between;margin-top:18px;padding-top:16px;border-top:1px solid rgba(255,255,255,.08);font-size:13px"><span style="color:#8A889C">Next live Q&amp;A</span><span style="color:#F5B94A">Sat · 7 PM IST</span></div>
+</a>
+<div style="padding:28px;border-radius:24px;border:1px solid rgba(255,255,255,.08);background:#0C0C14">
+<div style="font:500 11px 'JetBrains Mono',monospace;letter-spacing:.16em;color:#8A889C">READERS ALSO PICKED UP</div>
+<div style="display:flex;gap:24px;margin-top:22px;padding-left:6px">
+<a href="#/book" class="bk" aria-label="Glasshouse Protocol" style="--w:80px;--h:120px;--t:14px"><div class="bk-in"><div class="bk-fr" style="background:#1E2A22;color:#EAF7DA"><div style="position:absolute;width:60%;height:40%;border:2px solid #B7F36B;left:20%;top:26%;transform:rotate(45deg)"></div><div class="gl"></div></div><div class="bk-sp" style="background:#121A15"></div><div class="bk-pg"></div></div></a>
+<a href="#/book" class="bk" aria-label="The Weight of Light" style="--w:80px;--h:120px;--t:14px"><div class="bk-in"><div class="bk-fr" style="background:#0F1A33"><div style="position:absolute;width:2px;height:70%;left:62%;top:15%;background:#8FB8FF"></div><div class="gl"></div></div><div class="bk-sp" style="background:#08101F"></div><div class="bk-pg"></div></div></a>
+<a href="#/book" class="bk" aria-label="Orchard of Small Gods" style="--w:80px;--h:120px;--t:14px"><div class="bk-in"><div class="bk-fr" style="background:#2A1A3F"><div style="position:absolute;width:84%;height:60%;border-radius:999px 999px 0 0;left:8%;bottom:0;background:#C9A7FF"></div><div class="gl"></div></div><div class="bk-sp" style="background:#1B102A"></div><div class="bk-pg"></div></div></a>
+</div>
+</div>
+</aside>
+</section>
+<div style="height:120px"></div>
+</div>

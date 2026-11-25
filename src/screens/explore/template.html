@@ -1,0 +1,73 @@
+<div style="min-height:100vh;background:#06060B;color:#F2F0EA;font-family:Inter,system-ui,sans-serif;overflow-x:clip">
+<!--nav-->
+
+<section style="max-width:1340px;margin:0 auto;padding:56px 56px 0">
+<div style="display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:24px">
+<div><div style="font:500 12px 'JetBrains Mono',monospace;letter-spacing:.2em;color:#F5B94A">EXPLORE · THE STACKS</div>
+<h1 style="margin:14px 0 0;font:600 clamp(44px,5.4vw,76px)/.96 'Space Grotesk',sans-serif;letter-spacing:-.045em">Pull a book off <em style="font-family:'Instrument Serif',serif;font-weight:400;color:#F5B94A">the shelf</em>.</h1></div>
+<p style="margin:0;max-width:380px;font-size:16px;line-height:1.6;color:#A09EB0">Hover a spine to lift it. Click to pull it out — it turns to face you. Switch shelves and the books rearrange themselves.</p>
+</div>
+<div role="tablist" aria-label="Shelves" style="display:flex;flex-wrap:wrap;gap:8px;margin-top:36px">
+<for-each list="{{cats}}" as="c"><button type="button" role="tab" aria-selected="{{c.on}}" onClick="{{c.pick}}" style="height:46px;padding:0 20px;border-radius:999px;font-size:14px;font-weight:500;cursor:pointer;transition:all .4s var(--settle);{{c.style}}">{{c.label}}</button></for-each>
+</div>
+</section>
+
+<section style="max-width:1340px;margin:0 auto;padding:40px 56px 0;display:flex;flex-wrap:wrap;gap:40px;align-items:stretch">
+<div onPointerMove="{{tilt}}" onPointerLeave="{{untilt}}" style="flex:1.5 1 560px;min-width:0;padding:36px 32px 28px;border-radius:30px;background:radial-gradient(700px 360px at 50% 110%,rgba(245,185,74,.14),transparent 70%),#0A0A12;border:1px solid rgba(255,255,255,.07);perspective:1600px">
+<div style="transform-style:preserve-3d;transform:rotateX(var(--rx,4deg)) rotateY(var(--ry,0deg));transition:transform .7s var(--settle)">
+<for-each list="{{shelves}}" as="sh">
+<div style="margin-bottom:34px">
+<div style="font:500 10px 'JetBrains Mono',monospace;letter-spacing:.18em;color:#8A889C;margin-bottom:12px">{{sh.label}}</div>
+<div style="display:flex;align-items:flex-end;gap:5px;min-height:290px;padding:0 8px;transform-style:preserve-3d">
+<for-each list="{{sh.books}}" as="s">
+<button type="button" class="spn" onClick="{{s.pick}}" aria-label="Pull out {{s.title}} by {{s.author}}" aria-pressed="{{s.on}}" style="width:{{s.w}}px;height:{{s.h}}px;background:{{s.bg}};color:{{s.ink}};view-transition-name:{{s.vt}};{{s.sel}}">
+<span style="width:56%;height:3px;background:{{s.accent}}"></span>
+<span style="writing-mode:vertical-rl;transform:rotate(180deg);font:400 19px 'Instrument Serif',serif;white-space:nowrap">{{s.title}}</span>
+<span style="writing-mode:vertical-rl;transform:rotate(180deg);font:600 9px 'JetBrains Mono',monospace;opacity:.8">{{s.short}}</span>
+</button>
+</for-each>
+</div>
+<div class="plank"></div>
+</div>
+</for-each>
+</div>
+</div>
+
+<aside aria-live="polite" style="flex:1 1 360px;min-width:0;padding:36px;border-radius:30px;background:#0C0C14;border:1px solid rgba(255,255,255,.08);display:flex;flex-direction:column">
+<div style="font:500 11px 'JetBrains Mono',monospace;letter-spacing:.16em;color:#8A889C">PULLED FROM THE SHELF</div>
+<div style="display:flex;justify-content:center;padding:34px 0 10px">
+<a href="#/book" class="bk" aria-label="Open {{cur.title}}" style="--w:200px;--h:300px;--t:32px;view-transition-name:{{curVt}}">
+<div class="bk-in"><div class="fr" style="background:{{cur.bg}};color:{{cur.ink}}"><div style="position:absolute;background:{{cur.accent}};{{cur.shape}}"></div><div style="position:absolute;inset:0;padding:22px 20px 20px 30px;display:flex;flex-direction:column;justify-content:space-between"><div style="font:500 8px 'JetBrains Mono',monospace;letter-spacing:.16em">{{cur.genre}}</div><div style="font:400 30px/.94 'Instrument Serif',serif">{{cur.title}}</div><div style="font:500 9px Inter;letter-spacing:.1em">{{cur.caps}}</div></div><div class="gl"></div></div><div class="sp" style="background:{{cur.spine}}"></div><div class="pg"></div></div>
+</a>
+</div>
+<div class="in" style="animation-name:{{inName}}">
+<h2 style="margin:24px 0 0;font:600 28px/1.1 'Space Grotesk',sans-serif;letter-spacing:-.02em">{{cur.title}}</h2>
+<div style="margin-top:6px;font-size:14px;color:#A09EB0">{{cur.author}} · ★ {{cur.rating}} · {{cur.reading}} reading</div>
+<p style="margin:16px 0 0;font:400 20px/1.4 'Instrument Serif',serif;color:#D6D4E0">{{cur.blurb}}</p>
+<div style="margin-top:16px;padding:14px 16px;border-radius:16px;background:rgba(157,140,255,.08);border:1px solid rgba(157,140,255,.22);font-size:14px;line-height:1.55;color:#E6E3F2"><span style="color:#C9BFFF">Companion:</span> {{cur.why}}</div>
+</div>
+<div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:auto;padding-top:22px">
+<a href="#/book" class="mag" onPointerMove="{{magnet}}" onPointerLeave="{{unmagnet}}" style="display:inline-flex;align-items:center;height:52px;padding:0 24px;border-radius:999px;background:#F5B94A;color:#120D04;font-weight:600">Open the book →</a>
+<button type="button" onClick="{{toggleSave}}" aria-pressed="{{savedOn}}" style="height:52px;padding:0 22px;border-radius:999px;border:1px solid rgba(255,255,255,.2);background:transparent;color:#F2F0EA;font-size:15px;font-weight:500;cursor:pointer">{{saveLabel}}</button>
+</div>
+</aside>
+</section>
+
+<section aria-labelledby="colT" style="max-width:1340px;margin:0 auto;padding:120px 56px 120px">
+<div class="rv"><div style="font:500 12px 'JetBrains Mono',monospace;letter-spacing:.2em;color:#F5B94A">COLLECTIONS</div><h2 id="colT" style="margin:14px 0 0;font:600 clamp(32px,3.6vw,46px)/1.05 'Space Grotesk',sans-serif;letter-spacing:-.035em">Stacks that open as you arrive</h2></div>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:22px;margin-top:44px">
+<for-each list="{{collections}}" as="c">
+<a href="#/book" class="stack" style="display:block;padding:36px 30px 30px;border-radius:28px;background:#0C0C14;border:1px solid rgba(255,255,255,.08);overflow:hidden">
+<div style="position:relative;height:260px;display:flex;justify-content:center">
+<div class="f1" style="position:absolute;bottom:0;left:calc(50% - 75px);width:150px;height:225px;border-radius:2px 5px 5px 2px;background:{{c.a.bg}};box-shadow:0 30px 50px -20px #000;transform:translateX(-120px) rotate(-12deg)"><div style="position:absolute;background:{{c.a.accent}};{{c.a.shape}}"></div></div>
+<div class="f3" style="position:absolute;bottom:0;left:calc(50% - 75px);width:150px;height:225px;border-radius:2px 5px 5px 2px;background:{{c.b.bg}};box-shadow:0 30px 50px -20px #000;transform:translateX(120px) rotate(12deg)"><div style="position:absolute;background:{{c.b.accent}};{{c.b.shape}}"></div></div>
+<div class="f2" style="position:absolute;bottom:0;left:calc(50% - 80px);width:160px;height:240px;border-radius:2px 5px 5px 2px;background:{{c.c.bg}};color:{{c.c.ink}};box-shadow:0 40px 60px -20px #000;z-index:2;overflow:hidden;transform:translateY(-26px)"><div style="position:absolute;background:{{c.c.accent}};{{c.c.shape}}"></div><div style="position:absolute;inset:0;padding:18px 16px 16px 22px;font:400 24px/.95 'Instrument Serif',serif">{{c.c.title}}</div></div>
+</div>
+<div style="margin-top:30px;font:500 11px 'JetBrains Mono',monospace;letter-spacing:.14em;color:{{c.color}}">{{c.kicker}}</div>
+<div style="margin-top:10px;font:600 24px 'Space Grotesk',sans-serif;letter-spacing:-.02em">{{c.title}}</div>
+<div style="margin-top:8px;font-size:14px;line-height:1.5;color:#A09EB0">{{c.desc}}</div>
+</a>
+</for-each>
+</div>
+</section>
+</div>
