@@ -1,9 +1,9 @@
 {
-  "name": "folio-reading-room",
+  "name": "lamplight",
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "Folio · The Reading Room: Immersive 3D: a book that opens as you scroll, a 3D library and an AI companion.",
+  "description": "Lamplight: Immersive 3D: a book that opens as you scroll, a 3D library and an AI companion.",
   "scripts": {
     "dev": "vite",
     "build": "vite build",

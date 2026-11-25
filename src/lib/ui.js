@@ -1,4 +1,4 @@
-// App-wide experience layer: smooth scroll, lamp cursor, preloader and the ⌘K "Ask Folio" palette.
+// App-wide experience layer: smooth scroll, lamp cursor, preloader and the ⌘K "Ask Lamplight" palette.
 import Lenis from 'lenis';
 import { BOOKS, AUTHORS, MOODS } from '../data/books.js';
 
@@ -100,7 +100,7 @@ export function preloader() {
   const el = document.createElement('div');
   el.className = 'preload';
   el.setAttribute('role', 'status');
-  el.innerHTML = `<div class="pl-in"><div class="pl-k">FOLIO · THE READING ROOM</div><div class="pl-n"><span>p.</span> <b>000</b></div><div class="pl-t">Turning on the lamp…</div><div class="pl-bar"><i></i></div></div>`;
+  el.innerHTML = `<div class="pl-in"><div class="pl-k">LAMPLIGHT · THE READING ROOM</div><div class="pl-n"><span>p.</span> <b>000</b></div><div class="pl-t">Turning on the lamp…</div><div class="pl-bar"><i></i></div></div>`;
   document.body.appendChild(el);
   const n = el.querySelector('b'), bar = el.querySelector('i');
   const dur = reducedMotion() ? 200 : 1500;
@@ -132,12 +132,12 @@ export function startPalette(go) {
   wrap.className = 'pal';
   wrap.hidden = true;
   wrap.innerHTML = `<div class="pal-scrim" data-close></div>
-  <div class="pal-box" role="dialog" aria-modal="true" aria-label="Ask Folio">
+  <div class="pal-box" role="dialog" aria-modal="true" aria-label="Ask Lamplight">
     <label class="pal-in"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 3l1.8 4.9L19 9.7l-4.2 3.2 1.4 5.1L12 15.2 7.8 18l1.4-5.1L5 9.7l5.2-1.8z"/></svg>
-      <span class="sr">Ask Folio</span><input type="text" placeholder="Ask for a book, a mood, an author…" autocomplete="off"><kbd>esc</kbd></label>
+      <span class="sr">Ask Lamplight</span><input type="text" placeholder="Ask for a book, a mood, an author…" autocomplete="off"><kbd>esc</kbd></label>
     <div class="pal-ai" hidden></div>
     <div class="pal-list" role="listbox"></div>
-    <div class="pal-foot"><span>↑↓ to move · ↵ to open</span><span>Folio companion · reads 214 of your highlights</span></div>
+    <div class="pal-foot"><span>↑↓ to move · ↵ to open</span><span>Lamplight companion · reads 214 of your highlights</span></div>
   </div>`;
   document.body.appendChild(wrap);
   const input = wrap.querySelector('input'), list = wrap.querySelector('.pal-list'), ai = wrap.querySelector('.pal-ai');
@@ -165,7 +165,7 @@ export function startPalette(go) {
     const hit = ANSWERS.find(([re]) => re.test(q)) || [null, MOODS[0], 'Here is where I would start, based on what you highlight most.'];
     const picks = BOOKS.filter((b) => b.moods.includes(hit[1]) && !b.upcoming).slice(0, 3);
     ai.hidden = false;
-    ai.innerHTML = `<div class="pal-ai-k">FOLIO COMPANION</div><p></p><div class="pal-ai-picks">${picks.map((b) => `<a href="#/book?b=${b.id}" style="--bg:${b.bg};--ac:${b.accent}"><i></i>${b.title}</a>`).join('')}</div>`;
+    ai.innerHTML = `<div class="pal-ai-k">LAMPLIGHT COMPANION</div><p></p><div class="pal-ai-picks">${picks.map((b) => `<a href="#/book?b=${b.id}" style="--bg:${b.bg};--ac:${b.accent}"><i></i>${b.title}</a>`).join('')}</div>`;
     const p = ai.querySelector('p');
     let i = 0;
     const full = hit[2];

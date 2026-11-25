@@ -26,7 +26,7 @@ const QA = [
 const JOURNEY = [
   { n: '01', color: '#F5B94A', kicker: 'MON 7:02 A.M. · FIELD LOG #42', text: '“The keeper tried to switch the radio off. It said it had a few more names to read.”', vis: 'Posted to 41.7k followers\n1,840 ♥ · 214 replies in 3 hours', meta: 'Dev Raman · #SaltDiaries', href: '#/feed', cta: 'Read the field log' },
   { n: '02', color: '#6FD6C4', kicker: 'MON–TUE · READERS REPLY', text: 'Readers ask whose names. Three theories start fighting in the replies.', vis: '“It’s reading the future” · 92 replies\n“They’re the crew of 1987” · 71\n“The keeper is on it” · 51', meta: 'Thread trending #1 in Thrillers', href: '#/community', cta: 'Join the thread' },
-  { n: '03', color: '#9D8CFF', kicker: 'WED · AI STUDIO', text: 'Folio’s AI groups 214 replies into three theories and drafts a chapter outline in Dev’s voice.', vis: '◆ Theory A — 43% of replies\n◆ Theory B — 33%\n◆ Theory C — 24%\n→ outline: 6 beats · 2,400 words', meta: 'Dev keeps beats 1, 3, 5 and rewrites the rest', href: '#/studio', cta: 'Open AI Studio' },
+  { n: '03', color: '#9D8CFF', kicker: 'WED · AI STUDIO', text: 'Lamplight’s AI groups 214 replies into three theories and drafts a chapter outline in Dev’s voice.', vis: '◆ Theory A — 43% of replies\n◆ Theory B — 33%\n◆ Theory C — 24%\n→ outline: 6 beats · 2,400 words', meta: 'Dev keeps beats 1, 3, 5 and rewrites the rest', href: '#/studio', cta: 'Open AI Studio' },
   { n: '04', color: '#FF7A59', kicker: 'THU · AUTHOR DASHBOARD', text: 'Chapter four goes to 1,200 early readers. Completion: 94%.', vis: 'Avg. read time 11m 40s\nMost highlighted: “The list was alphabetical. Mine was not on it.”', meta: 'Scheduled for Friday 7 a.m.', href: '#/dashboard', cta: 'See the dashboard' },
   { n: '05', color: '#F2C14E', kicker: 'FRI · IN THE BOOK', text: 'Salt & Static, chapter 4: “The List.” 24,900 readers now.', vis: '★ 4.6 · 12,880 ratings\nLive Q&A tonight · 1,940 going', meta: 'From a 40-word story to a chapter in five days', href: '#/book?b=salt', cta: 'Read chapter four' },
 ];
@@ -56,7 +56,7 @@ const TICKS = [
 export default class ReadingRoomScreen extends ViewModel {
   constructor() {
     super();
-    this.state = { mood: 'Mind-bending', chat: [{ who: 'ai', label: 'FOLIO COMPANION', text: 'I’ve read chapter one with you. Ask me anything — I’ll answer from the page and never spoil what comes next.' }], following: {}, flipped: {} };
+    this.state = { mood: 'Mind-bending', chat: [{ who: 'ai', label: 'LAMPLIGHT COMPANION', text: 'I’ve read chapter one with you. Ask me anything — I’ll answer from the page and never spoil what comes next.' }], following: {}, flipped: {} };
     this.cleanups = [];
   }
 
@@ -144,7 +144,7 @@ export default class ReadingRoomScreen extends ViewModel {
     if (!text || this.state.chat.some((m) => m.typing)) return;
     const hit = qa || QA.find((q) => q.re.test(text));
     const reply = hit || { a: 'Chapter one only hints at that. 41 readers asked something similar — the thread is open in the community, and Mira answers the best one on Saturday.', cite: 'Community · 41 similar questions', hl: [] };
-    const chat = [...this.state.chat, { who: 'me', label: 'YOU', text }, { who: 'ai', label: 'FOLIO COMPANION', text: '', typing: true }];
+    const chat = [...this.state.chat, { who: 'me', label: 'YOU', text }, { who: 'ai', label: 'LAMPLIGHT COMPANION', text: '', typing: true }];
     this.setState({ chat: chat.slice(-7), draft: '' });
     const words = reply.a.split(' ');
     let i = 0;

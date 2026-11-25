@@ -97,7 +97,7 @@ export default class LibraryScreen extends ViewModel {
       ].map(([b, kicker, kc, meta, pct]) => ({ ...domBook(b), kicker, kc, meta, pct })),
 
       collections: [
-        { kicker: "EDITORS' PICKS · NOVEMBER", color: '#F5B94A', title: 'Books that rearrange time', desc: 'Looping, reversed and braided stories, chosen by the Folio editors.', ids: ['glass', 'weight', 'carto'], readers: '61k', href: '#/book?b=glass' },
+        { kicker: "EDITORS' PICKS · NOVEMBER", color: '#F5B94A', title: 'Books that rearrange time', desc: 'Looping, reversed and braided stories, chosen by the Lamplight editors.', ids: ['glass', 'weight', 'carto'], readers: '61k', href: '#/book?b=glass' },
         { kicker: 'BORN IN PUBLIC', color: '#6FD6C4', title: 'Started as daily stories', desc: 'Every one of these began as a 40-word post that readers would not let go.', ids: ['moons', 'salt', 'km'], readers: '40k', href: '#/book?b=moons' },
         { kicker: 'COMPANION · BUILT FOR YOU', color: '#C9BFFF', title: 'Rain, lamps and long nights', desc: 'Four quiet books for the monsoon; two by authors you follow.', ids: ['monsoon', 'lanterns', 'nine'], readers: '25k', href: '#/book?b=lanterns' },
       ].map((col, i) => ({ ...col, d: (i * 0.08) + 's', count: 12 + i * 5, books: col.ids.map((id, k) => ({ ...domBook(BOOK[id]), k: k - 1 })) })),

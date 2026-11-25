@@ -35,7 +35,7 @@ function show(path) {
   current?.destroy?.();
   host.replaceChildren();
   screenStyle.textContent = route.style;
-  document.title = `${route.title} · Folio`;
+  document.title = `${route.title} · Lamplight`;
   document.documentElement.dataset.route = route.nav;
   current = mount(route.Screen, {
     root: host,

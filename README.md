@@ -1,12 +1,12 @@
-# Folio · The Reading Room
+# Lamplight
 
-The immersive 3D direction for Folio, in the **Lamplight** design language: a dark reading room
+A Folio concept, the immersive 3D direction: a dark reading room
 lit by a lamp that follows your cursor. One real-time WebGL book opens as you scroll, its pages
 riffle, readers' highlights float out of the margins and it flies back into a 3D helix library.
 Around it: an "Ask the book" companion, a live globe of readers, a story-to-chapter journey,
 reading challenges, a page-turning reader with ambient sound, and the community screens.
 
-This is one of three independent Folio projects, each in its own repository with its own
+This is one of three independent Folio concept projects, each in its own repository with its own
 dependencies, configuration and deployment. Nothing is shared, so you can change it freely.
 
 ## Run it
@@ -35,7 +35,7 @@ src/
   lib/
     stage.js               three.js layer: Stage (lamp, camera), Book3D (opening, page curl), Helix, Dust
     covers.js              one cover design painted for CSS books and WebGL textures
-    ui.js                  smooth scroll (Lenis), lamp cursor, preloader, reveals, ⌘K Ask Folio palette
+    ui.js                  smooth scroll (Lenis), lamp cursor, preloader, reveals, ⌘K Ask Lamplight palette
     ambience.js            generated rain / fire / library sound (Web Audio, no files)
   shell/
     nav.html               top navigation (becomes a bottom tab bar on phones)
@@ -88,5 +88,5 @@ CSS is swapped in only while it is showing, so class names cannot clash.
 
 ## Deploy
 
-Linked to the Vercel project `folio-reading-room`. Every push to `main` redeploys; pull
+Linked to the Vercel project `lamplight`. Every push to `main` redeploys; pull
 requests get preview URLs. To deploy by hand: `npx vercel --prod`.

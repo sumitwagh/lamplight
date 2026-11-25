@@ -1,5 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-<defs><radialGradient id="g" cx="50%" cy="30%" r="70%"><stop offset="0" stop-color="#3a2a12"/><stop offset=".55" stop-color="#120f14"/><stop offset="1" stop-color="#07070C"/></radialGradient></defs>
+<defs><radialGradient id="g" cx="50%" cy="25%" r="75%"><stop offset="0" stop-color="#2e2210"/><stop offset=".6" stop-color="#110e14"/><stop offset="1" stop-color="#07070C"/></radialGradient>
+<linearGradient id="c" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F5B94A" stop-opacity=".55"/><stop offset="1" stop-color="#F5B94A" stop-opacity="0"/></linearGradient></defs>
 <rect width="64" height="64" rx="14" fill="url(#g)"/>
-<circle cx="32" cy="22" r="16" fill="#F5B94A" opacity=".18"/>
-<path d="M12 18l20 7v29l-20-7z" fill="#F5B94A"/><path d="M52 18l-20 7v29l20-7z" fill="#9D8CFF"/><path d="M32 25v29" stroke="#07070C" stroke-width="2"/></svg>
+<path d="M20 9h24l7 15H13z" fill="#F5B94A"/><path d="M15 24h34l9 26H6z" fill="url(#c)"/>
+<path d="M32 24v5" stroke="#FFD58A" stroke-width="3"/>
+<path d="M12 53l20-6 20 6" stroke="#9D8CFF" stroke-width="4" stroke-linejoin="round" fill="none"/><path d="M32 47v6" stroke="#9D8CFF" stroke-width="4"/></svg>
